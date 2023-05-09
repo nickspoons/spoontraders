@@ -1,0 +1,142 @@
+@font-face {
+   font-family: "Montserrat";
+   src: local("Montserrat"),
+   url("../assets/fonts/Montserrat.ttf") format("woff2-variations");
+}
+
+body {
+   color: #ebdbb2;
+   background-color: #1d2021;
+   font-family: Montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+   margin: 2em;
+}
+
+main {
+   margin-top: 0.5em;
+   padding: 2em;
+   border: 1px solid #555;
+   background-color: #3c3836;
+}
+
+button {
+   background-color: #1d2021;
+   border: 1px solid #928374;
+   border-radius: 0.3em 0;
+   color: #ebdbb2;
+   cursor: pointer;
+   padding: 0.5em 1em;
+   margin: 1em 0;
+}
+button:hover {
+   background-color: #3c3836;
+}
+
+hr {
+   border: solid 0.2em #ebdbb2;
+   border-radius: 0.2em;
+   height: 0;
+   margin: 1em -1em;
+}
+
+table {
+   border-collapse: collapse;
+   width: 100%;
+}
+table td,
+table th {
+   text-align: left;
+   vertical-align: top;
+}
+table.clickable tr:not(.header):hover {
+   background-color: #ebdbb2;
+   cursor: pointer;
+}
+
+@media all and (max-width: 736px) {
+   body {
+      margin: 0.5em;
+   }
+
+   main {
+      padding: 1em 0.5em;
+   }
+
+   hr {
+      margin: 1em 0;
+   }
+}
+
+
+/* $background1-dark:  $dark0-hard;                // #1d2021; */
+/* $background2-dark:  $dark1;                     // #3c3836; */
+/* $foreground1-dark:  $light1;                    // #ebdbb2; */
+/* $foreground2-dark:  $light2;                    // #d5c4a1; */
+/* $highlight-dark:    $dark2;                     // #ebdbb2; */
+/* $link-dark:         $bright-blue;               // #83a598; */
+/* $link-active-dark:  $bright-green;              // #b8bb26; */
+
+/* $dark0_hard:        #1d2021; */
+/* $dark0:             #282828; */
+/* $dark0_soft:        #32302f; */
+/* $dark1:             #3c3836; */
+/* $dark2:             #504945; */
+/* $dark3:             #665c54; */
+/* $dark4:             #7c6f64; */
+
+/* $gray:              #928374; */
+
+/* $light0_hard:       #f9f5d7; */
+/* $light0:            #fbf1c7; */
+/* $light0_soft:       #f2e5bc; */
+/* $light1:            #ebdbb2; */
+/* $light2:            #d5c4a1; */
+/* $light3:            #bdae93; */
+/* $light4:            #a89984; */
+
+/* $bright-red:        #fb4934; */
+/* $bright-green:      #b8bb26; */
+/* $bright-yellow:     #fabd2f; */
+/* $bright-blue:       #83a598; */
+/* $bright-purple:     #d3869b; */
+/* $bright-aqua:       #8ec07c; */
+/* $bright-orange:     #fe8019; */
+
+/* $neutral-red:       #cc241d; */
+/* $neutral-green:     #98971a; */
+/* $neutral-yellow:    #d79921; */
+/* $neutral-blue:      #458588; */
+/* $neutral-purple:    #b16286; */
+/* $neutral-aqua:      #689d6a; */
+/* $neutral-orange:    #d65d0e; */
+
+/* $faded-red:         #9d0006; */
+/* $faded-green:       #79740e; */
+/* $faded-yellow:      #b57614; */
+/* $faded-blue:        #076678; */
+/* $faded-purple:      #8f3f71; */
+/* $faded-aqua:        #427b58; */
+/* $faded-orange:      #af3a03; */
+
+
+#view-registration .container {
+   display: flex;
+   flex-basis: 0;
+   flex-direction: row;
+   flex-wrap: wrap;
+}
+#view-registration form {
+   display: flex;
+   flex-direction: column;
+   flex-grow: 1;
+}
+#view-registration label {
+   font-size: smaller;
+   margin-top: 0.5em;
+   opacity: 0.6;
+}
+#view-registration input {
+   max-width: 20em;
+}
+#view-registration button {
+   place-self: flex-start;
+}
