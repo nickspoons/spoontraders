@@ -38,7 +38,7 @@ st.view = (() => {
       $currentView.classList.add('hidden')
       $next.classList.remove('hidden')
       $currentView = $next
-      if (!st.state.loading) {
+      if (!st.state.loading && st.state.registered) {
          [...$nav.getElementsByTagName('a')].forEach(a => {
             if (Number(a.dataset.id) === currentIndex)
                a.classList.add('active')
