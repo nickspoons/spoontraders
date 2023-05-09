@@ -49,5 +49,8 @@ st.view = (() => {
       }
    }
 
-   return { update }
+   return {
+      get current() { return $currentView },
+      update
+   }
 })()

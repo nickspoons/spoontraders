@@ -1,5 +1,3 @@
-const dbi = id => document.getElementById(id)
-
 const st = {
    state: {
       loading: true,

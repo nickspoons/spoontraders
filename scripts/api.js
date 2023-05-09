@@ -11,7 +11,7 @@ st.api = (() => {
       }
       if (!resp.ok)
          return st.error.showFromResponse(resp)
-      return (await resp.json()).data
+      return (await resp.json())
    }
 
    const get = async url => {
