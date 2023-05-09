@@ -11,23 +11,7 @@
     <link rel="stylesheet" href="styles/style.css">
     <style>.hidden { display: none } .invisible { visibility: hidden }</style>
 
-    <script>
-      const seed = Math.random()
-      const scripts = [
-        'globals',
-        'view',
-        'error',
-        'api',
-        'registration',
-        'agent',
-        'load'
-      ]
-      scripts.forEach(scriptName => {
-        let $script = document.createElement('script')
-        $script.src = `scripts/${scriptName}.js?s=${seed}`
-        document.head.append($script)
-      })
-    </script>
+    <script>document.writeln(`<script src="scripts/init.js?s=${Math.random()}"><\/script>`);</script>
   </head>
   <body>
 
