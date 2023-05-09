@@ -5,7 +5,6 @@ const st = {
       loading: true,
       registered: false,
       error: false,
-      token: null,
-      data: null
+      token: null
    }
 }

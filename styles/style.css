@@ -11,6 +11,18 @@ body {
    margin: 2em;
 }
 
+nav a {
+   color: #83a598;
+   margin-right: 2em;
+   text-decoration: none;
+}
+nav a.active {
+   color: #b8bb26;
+}
+nav a:hover {
+   text-decoration: underline;
+}
+
 main {
    margin-top: 0.5em;
    padding: 2em;

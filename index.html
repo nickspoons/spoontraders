@@ -9,7 +9,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="styles/style.css">
-    <style>.hidden { display: none }</style>
+    <style>.hidden { display: none } .invisible { visibility: hidden }</style>
 
     <script defer src="scripts/globals.js"></script>
     <script defer src="scripts/view.js"></script>
@@ -20,11 +20,16 @@
     <script defer src="scripts/load.js"></script>
   </head>
   <body>
+
+    <nav id="nav" class="invisible">
+      <a data-id="2" class="active">Agent</a>
+      <a data-id="3">Waypoints</a>
+      <a data-id="4">Status</a>
+    </nav>
+
     <main>
 
-      <div id="view-loading" class="view">
-        ...
-      </div>
+      <div id="view-loading" class="view"> ... </div>
 
       <div id="view-registration" class="view hidden">
         <div class="container">
@@ -54,8 +59,12 @@
         </pre>
       </div>
 
-      <div id="view-other-stuff" class="view hidden">
-        Not yet
+      <div id="view-waypoints" class="view hidden">
+        <h2>Waypoints</h2>
+      </div>
+
+      <div id="view-status" class="view hidden">
+        <h2>Status</h2>
       </div>
 
       <div id="view-error" class="view hidden">
