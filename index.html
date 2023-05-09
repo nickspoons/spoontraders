@@ -11,13 +11,24 @@
     <link rel="stylesheet" href="styles/style.css">
     <style>.hidden { display: none } .invisible { visibility: hidden }</style>
 
-    <script defer src="scripts/globals.js"></script>
-    <script defer src="scripts/view.js"></script>
-    <script defer src="scripts/error.js"></script>
-    <script defer src="scripts/api.js"></script>
-    <script defer src="scripts/registration.js"></script>
-    <script defer src="scripts/agent.js"></script>
-    <script defer src="scripts/load.js"></script>
+    <script>
+      const seed = Math.random()
+      const scripts = [
+        'globals',
+        'view',
+        'error',
+        'api',
+        'registration',
+        'agent',
+        'load'
+      ]
+      scripts.forEach(scriptName => {
+        let $script = document.createElement('script')
+        $script.defer = true
+        $script.src = `scripts/${scriptName}.js?s=${seed}`
+        document.head.append($script)
+      })
+    </script>
   </head>
   <body>
 
