@@ -24,7 +24,6 @@
       ]
       scripts.forEach(scriptName => {
         let $script = document.createElement('script')
-        $script.defer = true
         $script.src = `scripts/${scriptName}.js?s=${seed}`
         document.head.append($script)
       })
