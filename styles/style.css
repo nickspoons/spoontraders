@@ -43,6 +43,15 @@ button:hover {
    background-color: #3c3836;
 }
 
+dl dt {
+   font-size: smaller;
+   opacity: 0.6;
+}
+dl dd {
+   margin-left: 0;
+   white-space: pre-line;
+}
+
 hr {
    border: solid 0.2em #ebdbb2;
    border-radius: 0.2em;
@@ -59,12 +68,27 @@ table th {
    text-align: left;
    vertical-align: top;
 }
+table th {
+   font-size: smaller;
+   opacity: 0.6;
+}
 table.clickable tr:not(.header):hover {
    background-color: #ebdbb2;
    cursor: pointer;
 }
 
-@media all and (max-width: 736px) {
+.wrapping-row {
+   display: flex;
+   flex-basis: 0;
+   flex-direction: row;
+   flex-wrap: wrap;
+   column-gap: 2em;
+}
+.wrapping-row > * {
+   flex-grow: 1;
+}
+
+@media all and (max-width: 30em) {
    body {
       margin: 0.5em;
    }
@@ -75,6 +99,10 @@ table.clickable tr:not(.header):hover {
 
    hr {
       margin: 1em 0;
+   }
+
+   .wrapping-row {
+      column-gap: 1em;
    }
 }
 
@@ -129,17 +157,9 @@ table.clickable tr:not(.header):hover {
 /* $faded-aqua:        #427b58; */
 /* $faded-orange:      #af3a03; */
 
-
-#view-registration .container {
-   display: flex;
-   flex-basis: 0;
-   flex-direction: row;
-   flex-wrap: wrap;
-}
 #view-registration form {
    display: flex;
    flex-direction: column;
-   flex-grow: 1;
 }
 #view-registration label {
    font-size: smaller;
@@ -151,4 +171,8 @@ table.clickable tr:not(.header):hover {
 }
 #view-registration button {
    place-self: flex-start;
+}
+
+#view-status table {
+   max-width: 30em;
 }
