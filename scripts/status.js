@@ -1,6 +1,7 @@
 st.status = (() => {
    const load = async () => {
       const data = await st.api.get('')
+      const seed = genSeed()
       st.view.current.innerHTML = `
 <h2>Status</h2>
 <p>${data.status}</p>
@@ -18,22 +19,38 @@ st.status = (() => {
 
 <h2>Leaderboards</h2>
 
-<div class="wrapping-row">
+<div class="wrapping-row seed-${seed}">
   <div>
     <h3>Most credits</h3>
-    ${totable(
-       data.leaderboards.mostCredits,
-       i => `<td>${i.agentSymbol}</td><td style="text-align: right">${i.credits.toLocaleString()}</td>`,
-       '<th>Agent</th><th style="text-align: right">Credits</th>')}
+    <table>
+      <tr><th>Agent</th><th>Credits</th></tr>
+      ${data.leaderboards.mostCredits.map(i => `
+      <tr>
+        <td>${i.agentSymbol}</td>
+        <td>${i.credits.toLocaleString()}</td>
+      </tr>`).join('')}
+    </table>
   </div>
   <div>
     <h3>Most submitted charts</h3>
-    ${totable(
-       data.leaderboards.mostSubmittedCharts,
-       i => `<td>${i.agentSymbol}</td><td style="text-align: right">${i.chartCount.toLocaleString()}</td>`,
-       '<th>Agent</th><th style="text-align: right">Chart count</th>')}
+    <table>
+      <tr><th>Agent</th><th>Chart count</th></tr>
+      ${data.leaderboards.mostSubmittedCharts.map(i => `
+      <tr>
+        <td>${i.agentSymbol}</td>
+        <td>${i.chartCount.toLocaleString()}</td>
+      </tr>`).join('')}
+    </table>
   </div>
 </div>
+<style>
+  .seed-${seed} table {
+    max-width: 30em;
+  }
+  .seed-${seed} table tr *:last-child {
+    text-align: right;
+  }
+</style>
 `
       st.view.update()
    }

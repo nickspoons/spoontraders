@@ -172,7 +172,3 @@ table.clickable tr:not(.header):hover {
 #view-registration button {
    place-self: flex-start;
 }
-
-#view-status table {
-   max-width: 30em;
-}
