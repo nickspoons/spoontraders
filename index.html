@@ -16,14 +16,13 @@
   <body>
 
     <nav id="nav" class="invisible">
-      <a data-id="2" class="active">Agent</a>
-      <a data-id="3">Waypoints</a>
-      <a data-id="4">Status</a>
+      <a data-id="1" class="active">Agent</a>
+      <a data-id="2">Waypoints</a>
+      <a data-id="3">Status</a>
     </nav>
 
     <main>
-
-      <div id="view-loading" class="view"> ... </div>
+      <div id="loading"><div id="spinner"></div></div>
 
       <div id="view-registration" class="view hidden">
         <div class="wrapping-row">
@@ -48,7 +47,7 @@
         </div>
       </div>
 
-      <div id="view-agent" class="view hidden">
+      <div id="view-agent" class="view">
         <pre id="pre-agent">
         </pre>
       </div>
