@@ -1,5 +1,6 @@
 st.status = (() => {
    const load = async () => {
+      st.view.loading = true
       const data = await st.api.get('')
       const seed = genSeed()
       st.view.current.innerHTML = `
@@ -51,8 +52,10 @@ st.status = (() => {
     text-align: right;
   }
 </style>
+<button id="btn-${seed}" class="refresh">Refresh</button>
 `
-      st.view.update()
+      dbi(`btn-${seed}`).onclick = () => load()
+      st.view.loading = false
    }
 
    return { load }
