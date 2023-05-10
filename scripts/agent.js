@@ -5,16 +5,17 @@ st.agent = (() => {
    const load = async () => {
       if (!st.state.token)
          return
-      st.state.registered = true
-      const { data } = await st.api.get('my/agent')
-      _data = data
+      const agentData = await st.api.get('my/agent')
+      if (!agentData)
+         return false
+      _data = agentData.data
       const display = {
-         handle: data.symbol,
-         headquarters: data.headquarters,
-         credits: data.credits
+         handle: _data.symbol,
+         headquarters: _data.headquarters,
+         credits: _data.credits
       }
       $pre.textContent = JSON.stringify(display, null, 2)
-      st.view.update()
+      return true
    }
 
    return {

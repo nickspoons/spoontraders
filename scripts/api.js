@@ -1,6 +1,10 @@
 st.api = (() => {
    const burl = 'https://api.spacetraders.io/v2'
 
+   const authHeader = () => st.state.token
+      ? { Authorization: `Bearer ${st.state.token}` }
+      : {}
+
    const request = async (url, options) => {
       let resp;
       try {
@@ -16,7 +20,7 @@ st.api = (() => {
 
    const get = async url => {
       return await request(url, {
-         headers: { Authorization: `Bearer ${st.state.token}` }
+         headers: authHeader()
       })
    }
 
@@ -24,7 +28,7 @@ st.api = (() => {
       return await request(url, {
          method: 'POST',
          headers: {
-            Authorization: `Bearer ${st.state.token}`,
+            ...authHeader(),
             'Content-Type': 'application/json'
          },
          body: JSON.stringify(payload)
