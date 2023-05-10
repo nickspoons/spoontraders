@@ -8,12 +8,12 @@ st.view = (() => {
       ERROR: 5
    }
    const $$views = [ // NB: indexes match View ID's
-      dbi('view-loading'),
-      dbi('view-registration'),
-      dbi('view-agent'),
-      dbi('view-waypoints'),
-      dbi('view-status'),
-      dbi('view-error')
+      { view: dbi('view-loading') },
+      { view: dbi('view-registration') },
+      { view: dbi('view-agent') },
+      { view: dbi('view-waypoints'), onactivate: () => st.waypoint.load() },
+      { view: dbi('view-status'), onactivate: () => st.status.load() },
+      { view: dbi('view-error') }
    ]
    let $currentView = $$views[0] // view-loading
    let selected = View.AGENT
@@ -35,8 +35,8 @@ st.view = (() => {
       const currentIndex = getCurrent()
       const $next = $$views[currentIndex]
       if ($next === $currentView) return
-      $currentView.classList.add('hidden')
-      $next.classList.remove('hidden')
+      $currentView.view.classList.add('hidden')
+      $next.view.classList.remove('hidden')
       $currentView = $next
       if (!st.state.loading && st.state.registered) {
          [...$nav.getElementsByTagName('a')].forEach(a => {
@@ -47,10 +47,12 @@ st.view = (() => {
          })
          $nav.classList.remove('invisible')
       }
+      if ($currentView.onactivate)
+         $currentView.onactivate()
    }
 
    return {
-      get current() { return $currentView },
+      get current() { return $currentView.view },
       update
    }
 })()
