@@ -83,6 +83,10 @@ table.clickable tr:not(.header):hover {
    cursor: pointer;
 }
 
+pre {
+   overflow: auto;
+}
+
 #loading {
    position: absolute;
    left: 0;
