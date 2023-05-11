@@ -11,16 +11,19 @@ body {
    margin: 2em;
 }
 
-nav a {
+a {
    color: #83a598;
-   margin-right: 2em;
    text-decoration: none;
 }
-nav a.active {
+a:hover {
+   color: #8ec07c;
+}
+a.active {
    color: #b8bb26;
 }
-nav a:hover {
-   text-decoration: underline;
+
+nav a {
+   margin-right: 2em;
 }
 
 main {
@@ -87,6 +90,7 @@ table.clickable tr:not(.header):hover {
    top: 0;
    bottom: 0;
    background-color: #3c383688;
+   border-radius: 1em 0;
    z-index: 1;
 }
 #loading #spinner {
@@ -123,6 +127,10 @@ table.clickable tr:not(.header):hover {
 @media all and (max-width: 30em) {
    body {
       margin: 0.5em;
+   }
+
+   nav a {
+      margin-right: 1em;
    }
 
    main {
