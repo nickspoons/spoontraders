@@ -27,10 +27,10 @@ st.status = (() => {
     <h3>Most credits</h3>
     <table>
       <tr><th>Agent</th><th>Credits</th></tr>
-      ${data.leaderboards.mostCredits.map(i => `
+      ${data.leaderboards.mostCredits.map(stat => `
       <tr>
-        <td>${i.agentSymbol}</td>
-        <td>${i.credits.toLocaleString()}</td>
+        <td>${stat.agentSymbol}</td>
+        <td>${stat.credits.toLocaleString()}</td>
       </tr>`).join('')}
     </table>
   </div>
@@ -38,10 +38,10 @@ st.status = (() => {
     <h3>Most submitted charts</h3>
     <table>
       <tr><th>Agent</th><th>Chart count</th></tr>
-      ${data.leaderboards.mostSubmittedCharts.map(i => `
+      ${data.leaderboards.mostSubmittedCharts.map(stat => `
       <tr>
-        <td>${i.agentSymbol}</td>
-        <td>${i.chartCount.toLocaleString()}</td>
+        <td>${stat.agentSymbol}</td>
+        <td>${stat.chartCount.toLocaleString()}</td>
       </tr>`).join('')}
     </table>
   </div>
