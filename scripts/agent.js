@@ -7,16 +7,22 @@ st.agent = (() => {
       if (!agentData)
          return false
       _data = agentData.data
+      const seed = genSeed()
       st.view.current.innerHTML = `
 <h2>${_data.symbol}</h2>
 
 <dl>
   <dt>Headquarters</dt>
-  <dd>${_data.headquarters}</dd>
+  <dd><a href="" id="a-${seed}">${_data.headquarters}</a></dd>
   <dt>Credits</dt>
   <dd>${_data.credits}</dd>
 </dl>
 `
+      dbi(`a-${seed}`).onclick = ce => {
+         ce.preventDefault()
+         st.view.navigate(st.view.View.WAYPOINT)
+         st.waypoint.load(_data.headquarters)
+      }
       return true
    }
 
