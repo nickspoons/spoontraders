@@ -1,61 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>Spoontraders</title>
-    <link rel="icon" sizes="32x32" href="assets/icons/favicon-32x32.png"/>
-    <link rel="icon" sizes="16x16" href="assets/icons/favicon-16x16.png"/>
-    <base href="/spoontraders/">
+   <head>
+      <meta charset="utf-8">
+      <title>Spoontraders</title>
+      <link rel="icon" sizes="32x32" href="assets/icons/favicon-32x32.png"/>
+      <link rel="icon" sizes="16x16" href="assets/icons/favicon-16x16.png"/>
+      <base href="/spoontraders/">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="styles/style.css">
-    <style>.hidden { display: none } .invisible { visibility: hidden }</style>
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="stylesheet" href="styles/style.css">
+      <style>.hidden { display: none } .invisible { visibility: hidden }</style>
 
-    <script>document.writeln(`<script src="scripts/init.js?s=${Math.random()}"><\/script>`);</script>
-  </head>
-  <body>
+      <script>document.writeln(`<script src="scripts/init.js?s=${Math.random()}"><\/script>`);</script>
+   </head>
+   <body>
 
-    <nav id="nav" class="invisible">
-      <a href="" data-id="1" class="active">Agent</a>
-      <a href="" data-id="2">Waypoints</a>
-      <a href="" data-id="3">Status</a>
-    </nav>
+      <nav id="nav" class="invisible">
+         <a href="" data-id="1" class="active">Agent</a>
+         <a href="" data-id="2">Waypoints</a>
+         <a href="" data-id="3">Status</a>
+      </nav>
 
-    <main>
-      <div id="loading"><div id="spinner"></div></div>
+      <main>
+         <div id="loading"><div id="spinner"></div></div>
 
-      <div id="view-registration" class="view hidden">
-        <div class="wrapping-row">
-          <form id="reg-form">
-            <h2>You need to register</h2>
-            <label for="reg-handle">Handle</label>
-            <input placeholder="Handle" id="reg-handle" name="reg-handle" required />
-            <label for="reg-faction">Faction</label>
-            <input placeholder="Faction" id="reg-faction" name="reg-faction" value="COSMIC" required />
-            <button type="submit">
-              Register
-            </button>
-          </form>
-          <form id="ver-form">
-            <h2>... or enter an access token</h2>
-            <label for="ver-token">Access token</label>
-            <input placeholder="Access token" id="ver-token" name="ver-token" required />
-            <button type="submit">
-              Verify
-            </button>
-          </form>
-        </div>
-      </div>
+         <div id="view-registration" class="view hidden">
+            <div class="wrapping-row">
+               <form id="reg-form">
+                  <h2>You need to register</h2>
+                  <label for="reg-handle">Handle</label>
+                  <input placeholder="Handle" id="reg-handle" name="reg-handle" required />
+                  <label for="reg-faction">Faction</label>
+                  <input placeholder="Faction" id="reg-faction" name="reg-faction" value="COSMIC" required />
+                  <button type="submit">
+                     Register
+                  </button>
+               </form>
+               <form id="ver-form">
+                  <h2>... or enter an access token</h2>
+                  <label for="ver-token">Access token</label>
+                  <input placeholder="Access token" id="ver-token" name="ver-token" required />
+                  <button type="submit">
+                     Verify
+                  </button>
+               </form>
+            </div>
+         </div>
 
-      <div id="view-agent" class="view"> ... </div>
-      <div id="view-waypoint" class="view hidden"> ... </div>
-      <div id="view-status" class="view hidden"> ... </div>
+         <div id="view-agent" class="view"> ... </div>
+         <div id="view-waypoint" class="view hidden"> ... </div>
+         <div id="view-status" class="view hidden"> ... </div>
 
-      <div id="view-error" class="view hidden">
-        <pre id="pre-error">
-        </pre>
-      </div>
+         <div id="view-error" class="view hidden">
+            <pre id="pre-error">
+            </pre>
+         </div>
 
-    </main>
-  </body>
+      </main>
+   </body>
 </html>

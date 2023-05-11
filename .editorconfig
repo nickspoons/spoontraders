@@ -3,6 +3,3 @@ root = true
 [*]
 indent_style = space
 indent_size = 3
-
-[*.html]
-indent_size = 2

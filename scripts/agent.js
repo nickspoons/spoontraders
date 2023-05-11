@@ -12,10 +12,10 @@ st.agent = (() => {
 <h2>${_data.symbol}</h2>
 
 <dl>
-  <dt>Headquarters</dt>
-  <dd><a href="" id="a-${seed}">${_data.headquarters}</a></dd>
-  <dt>Credits</dt>
-  <dd>${_data.credits}</dd>
+   <dt>Headquarters</dt>
+   <dd><a href="" id="a-${seed}">${_data.headquarters}</a></dd>
+   <dt>Credits</dt>
+   <dd>${_data.credits}</dd>
 </dl>
 `
       dbi(`a-${seed}`).onclick = ce => {
