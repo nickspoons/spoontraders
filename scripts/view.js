@@ -38,7 +38,7 @@ st.view = (() => {
 
    const navigate = toview => {
       [...dbts($nav, 'a')].forEach(a => {
-         if (a.dataset.id === toview)
+         if (Number(a.dataset.id) === toview)
             a.classList.add('active')
          else
             a.classList.remove('active')
