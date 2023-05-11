@@ -18,6 +18,8 @@ st.status = (() => {
   <dd>${data.stats.waypoints}</dd>
 </dl>
 
+<hr>
+
 <h2>Leaderboards</h2>
 
 <div class="wrapping-row seed-${seed}">
