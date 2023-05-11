@@ -31,6 +31,7 @@ st.view = (() => {
             a.classList.remove('active')
       })
       selected = Number(ce.target.dataset.id)
+      st.state.error = false
       update()
    }
 
