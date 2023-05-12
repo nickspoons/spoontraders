@@ -8,7 +8,7 @@ st.agent = (() => {
          return false
       _data = agentData.data
       const seed = genSeed()
-      st.view.current.innerHTML = `
+      st.view.get(st.view.View.AGENT).innerHTML = `
 <h2>${_data.symbol}</h2>
 
 <dl>

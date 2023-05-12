@@ -2,6 +2,7 @@ const seed = Math.random()
 const scripts = [
    'utils',
    'globals',
+   'cache',
    'view',
    'error',
    'api',

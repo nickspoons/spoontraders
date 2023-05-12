@@ -13,8 +13,8 @@ st.view = (() => {
       { view: dbi('view-status'), onactivate: () => st.status.load() },
       { view: dbi('view-error') }
    ]
-   let $currentView = $$views[View.AGENT]
-   let selected = View.AGENT
+   let selected = st.cache.view || View.AGENT
+   let $currentView = null
 
    const getCurrent = () => {
       if (st.state.error) return View.ERROR
@@ -25,7 +25,8 @@ st.view = (() => {
    const $nav = dbi('nav')
    $nav.onclick = async ce => {
       ce.preventDefault()
-      navigate(Number(ce.target.dataset.id))
+      if (ce.target.tagName === 'A')
+         navigate(Number(ce.target.dataset.id))
    }
 
    const $loading = dbi('loading')
@@ -37,12 +38,15 @@ st.view = (() => {
    }
 
    const navigate = toview => {
+      if (toview === -1)
+         toview = selected;
       [...dbts($nav, 'a')].forEach(a => {
          if (Number(a.dataset.id) === toview)
             a.classList.add('active')
          else
             a.classList.remove('active')
       })
+      st.cache.view = toview
       selected = toview
       st.state.error = false
       update()
@@ -52,7 +56,8 @@ st.view = (() => {
       const currentIndex = getCurrent()
       const $next = $$views[currentIndex]
       if ($next !== $currentView) {
-         $currentView.view.classList.add('hidden')
+         if ($currentView)
+            $currentView.view.classList.add('hidden')
          $next.view.classList.remove('hidden')
          $currentView = $next
          if ($currentView.onactivate)
@@ -66,6 +71,7 @@ st.view = (() => {
       View,
       get current() { return $currentView.view },
       set loading(value) { setLoading(value) },
+      get: view => $$views[view].view,
       navigate,
       update
    }

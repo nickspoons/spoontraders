@@ -22,7 +22,7 @@
       st.state.token = token
       if (!await st.agent.load())
          return
-      localStorage.setItem('access_token', token)
+      st.cache.token = token
       st.state.registered = true
       st.view.update()
    }
