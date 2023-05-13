@@ -4,6 +4,6 @@
       st.state.registered = true
       await st.agent.load()
    }
-   st.view.navigate(-1)
+   await st.view.navigate(-1)
    st.view.loading = false
 })()

@@ -9,8 +9,8 @@ st.view = (() => {
    const $$views = [ // NB: indexes match View ID's
       { view: dbi('view-registration') },
       { view: dbi('view-agent') },
-      { view: dbi('view-waypoint'), onactivate: () => st.waypoint.load() },
-      { view: dbi('view-status'), onactivate: () => st.status.load() },
+      { view: dbi('view-waypoint'), onactivate: async () => await st.waypoint.load() },
+      { view: dbi('view-status'), onactivate: async () => await st.status.load() },
       { view: dbi('view-error') }
    ]
    let selected = st.cache.view || View.AGENT
@@ -37,7 +37,7 @@ st.view = (() => {
          $loading.classList.add('hidden')
    }
 
-   const navigate = toview => {
+   const navigate = async toview => {
       if (toview === -1)
          toview = selected;
       [...dbts($nav, 'a')].forEach(a => {
@@ -49,10 +49,10 @@ st.view = (() => {
       st.cache.view = toview
       selected = toview
       st.state.error = false
-      update()
+      await update()
    }
 
-   const update = () => {
+   const update = async () => {
       const currentIndex = getCurrent()
       const $next = $$views[currentIndex]
       if ($next !== $currentView) {
@@ -61,7 +61,7 @@ st.view = (() => {
          $next.view.classList.remove('hidden')
          $currentView = $next
          if ($currentView.onactivate)
-            $currentView.onactivate()
+            await $currentView.onactivate()
       }
       if (st.state.registered)
          $nav.classList.remove('invisible')
