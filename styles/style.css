@@ -197,19 +197,3 @@ pre {
 /* $faded-purple:      #8f3f71; */
 /* $faded-aqua:        #427b58; */
 /* $faded-orange:      #af3a03; */
-
-#view-registration form {
-   display: flex;
-   flex-direction: column;
-}
-#view-registration label {
-   font-size: smaller;
-   margin-top: 0.5em;
-   opacity: 0.6;
-}
-#view-registration input {
-   max-width: 20em;
-}
-#view-registration button {
-   place-self: flex-start;
-}
