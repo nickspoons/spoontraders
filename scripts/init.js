@@ -5,6 +5,7 @@ const scripts = [
    'cache',
    'view',
    'api',
+   'elements/system/draw',
    'views/error',
    'views/registration',
    'views/agent',

@@ -15,6 +15,8 @@ st.views.waypoint = (() => {
       st.view.current.innerHTML = `
 <h2>System: ${systemID}</h2>
 
+<canvas height="2000" width="2000" id="canvas-${seed}"></canvas>
+
 <div class="seed-${seed}">
    ${waypointsData.data.map(wp => `
    <div class="waypoint">
@@ -41,6 +43,11 @@ st.views.waypoint = (() => {
 </div>
 
 <style>
+   #canvas-${seed} {
+      border: 1px solid #ebdbb29a;
+      width: 100%;
+   }
+
    .seed-${seed} {
       display: flex;
       flex-basis: 0;
@@ -50,13 +57,13 @@ st.views.waypoint = (() => {
    .seed-${seed} .waypoint {
       background-color: #1d2021;
       padding: 0.5em;
-      border: 1px solid #ebdbb29a;;
+      border: 1px solid #ebdbb29a;
       border-radius: 0.5em 0;
       position: relative;
    }
 </style>
 `
-      // dbi(`btn-${seed}`).onclick = () => load()
+      st.elements.system.draw(dbi(`canvas-${seed}`), waypointsData.data)
       st.view.loading = false
    }
 

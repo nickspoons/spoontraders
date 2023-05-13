@@ -1,4 +1,6 @@
 const st = {
+
+   // Data
    agent: {
       headquarters: null
    },
@@ -7,5 +9,9 @@ const st = {
       error: false,
       token: null
    },
+
+   // Namespaces
+   elements: { },
    views: { }
+
 }
