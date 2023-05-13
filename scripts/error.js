@@ -1,9 +1,8 @@
 st.error = (() => {
-   const $pre = dbi('pre-error')
    const show = err => {
-      $pre.textContent = err
       st.state.error = true
       st.view.update()
+      st.view.current.innerHTML = `<pre>${err}</pre>`
       return null
    }
    const showFromResponse = async resp => {
