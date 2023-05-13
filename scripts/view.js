@@ -9,8 +9,8 @@ st.view = (() => {
    const $$views = [ // NB: indexes match View ID's
       { view: dbi('view-registration') },
       { view: dbi('view-agent') },
-      { view: dbi('view-waypoint'), onactivate: async () => await st.waypoint.load() },
-      { view: dbi('view-status'), onactivate: async () => await st.status.load() },
+      { view: dbi('view-waypoint'), onactivate: async () => await st.views.waypoint.load() },
+      { view: dbi('view-status'), onactivate: async () => await st.views.status.load() },
       { view: dbi('view-error') }
    ]
    let selected = st.cache.view || View.AGENT

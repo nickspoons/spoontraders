@@ -1,4 +1,4 @@
-st.error = (() => {
+st.views.error = (() => {
    const show = err => {
       st.state.error = true
       st.view.update()

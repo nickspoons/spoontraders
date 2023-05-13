@@ -1,4 +1,4 @@
-st.waypoint = (() => {
+st.views.waypoint = (() => {
    let currentSystemID = null
 
    const re = /^(?<systemID>\w+-\w+)(-(?<waypointID>\w+))?/
@@ -61,7 +61,7 @@ st.waypoint = (() => {
    }
 
    const load = async id => {
-      let { systemID, waypointID } = split(id || st.agent.data.headquarters)
+      let { systemID, waypointID } = split(id || st.agent.headquarters)
       if (systemID !== currentSystemID)
          await renderSystem(systemID)
    }

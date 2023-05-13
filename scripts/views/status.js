@@ -1,4 +1,4 @@
-st.status = (() => {
+st.views.status = (() => {
    const load = async () => {
       st.view.loading = true
       const data = await st.api.get('')

@@ -4,12 +4,12 @@ const scripts = [
    'globals',
    'cache',
    'view',
-   'error',
    'api',
-   'registration',
-   'agent',
-   'waypoint',
-   'status',
+   'views/error',
+   'views/registration',
+   'views/agent',
+   'views/status',
+   'views/waypoint',
    'load'
 ]
 scripts.forEach(scriptName =>
