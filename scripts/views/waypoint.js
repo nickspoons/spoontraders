@@ -9,12 +9,14 @@ st.views.waypoint = (() => {
       let waypointsData = await st.api.get(`systems/${systemID}/waypoints`)
       if (!waypointsData)
          return
+      const meta = waypointsData.meta
       currentSystemID = systemID
 
       const seed = genSeed()
       st.view.current.innerHTML = `
 <h2>System: ${systemID}</h2>
 
+<label for="canvas-${seed}">${meta.limit} of ${meta.total} waypoints</label>
 <canvas height="2000" width="2000" id="canvas-${seed}"></canvas>
 
 <div class="seed-${seed}">

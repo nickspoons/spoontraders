@@ -84,6 +84,11 @@ table.clickable tr:not(.header):hover {
    cursor: pointer;
 }
 
+label {
+   font-size: smaller;
+   opacity: 0.6;
+}
+
 pre {
    overflow: auto;
 }

@@ -4,66 +4,70 @@ st.elements.system = (() => {
       ctx.fillRect(0, 0, 2000, 2000);
    }
 
-   const drawWaypoints = (ctx, waypoints) => {
-      seen = {}
-      waypoints.forEach(wp => {
+   const drawWaypoints = (ctx, wps, orbs) => {
+      wps.forEach(wp => {
          ctx.beginPath()
-         const coord = `$x{wp.x}:y${wp.y}`
          let radius
-         if (coord in seen) {
-            seen[coord] += 10
-            radius = seen[coord]
-            ctx.lineWidth = 9
-            if (wp.type === 'MOON')
-               ctx.strokeStyle = `#83a598`
-            else if (wp.type === 'ORBITAL_STATION')
-               ctx.strokeStyle = `#b16286`
-            else
-               ctx.fillStyle = `#fb4934`
-            ctx.arc(1000 + wp.x * 10, 1000 + wp.y * 10, radius, 0, 2 * Math.PI)
-            ctx.stroke()
+         if (wp.type === 'PLANET') {
+            ctx.fillStyle = `#b8bb26`
+            radius = 50
+         }
+         else if (wp.type === 'GAS_GIANT') {
+            ctx.fillStyle = `#98971a`
+            radius = 80
+         }
+         else if (wp.type === 'ASTEROID_FIELD') {
+            ctx.fillStyle = `#665c54`
+            radius = 30
+         }
+         else if (wp.type === 'JUMP_GATE') {
+            ctx.fillStyle = `#83a598`
+            radius = 30
          }
          else {
-            if (wp.type === 'PLANET') {
-               ctx.fillStyle = `#b8bb26`
-               radius = 50
-            }
-            else if (wp.type === 'GAS_GIANT') {
-               ctx.fillStyle = `#98971a`
-               radius = 80
-            }
-            else if (wp.type === 'ASTEROID_FIELD') {
-               ctx.fillStyle = `#665c54`
-               radius = 30
-            }
-            else if (wp.type === 'JUMP_GATE') {
-               ctx.fillStyle = `#83a598`
-               radius = 30
-            }
-            else {
-               ctx.fillStyle = `#fb4934`
-               radius = 10
-            }
-            ctx.arc(1000 + wp.x * 10, 1000 + wp.y * 10, radius, 0, 2 * Math.PI)
-            ctx.fill()
-            ctx.strokeStyle = '#f9f5d7'
-            ctx.lineWidth = 2
-            ctx.stroke()
-            seen[coord] = radius
+            ctx.fillStyle = `#fb4934`
+            radius = 10
          }
+         ctx.arc(1000 + wp.x * 10, 1000 + wp.y * 10, radius, 0, 2 * Math.PI)
+         ctx.fill()
+         ctx.strokeStyle = '#f9f5d7'
+         ctx.lineWidth = 2
+         ctx.stroke()
+         wp.orbitals.forEach(wo => {
+            const orb = orbs.find(ob => ob.symbol === wo.symbol)
+            if (!orb)
+               console.log(`Orbital ${wo.symbol} not found`)
+            else {
+               radius += 10
+               ctx.lineWidth = 10
+               if (orb.type === 'MOON')
+                  ctx.strokeStyle = `#83a598`
+               else if (orb.type === 'ORBITAL_STATION')
+                  ctx.strokeStyle = `#b16286`
+               else
+                  ctx.fillStyle = `#fb4934`
+               ctx.arc(1000 + wp.x * 10, 1000 + wp.y * 10, radius, 0, 2 * Math.PI)
+               ctx.stroke()
+               ctx.strokeStyle = '#f9f5d7'
+               ctx.lineWidth = 2
+               ctx.lineCap = 'square'
+               ctx.stroke()
+            }
+         })
       })
    }
 
    const draw = (canvas, waypoints) => {
       const ctx = canvas.getContext('2d');
       clear(ctx)
-      let wps = waypoints
-      drawWaypoints(ctx, wps)
+      let orbsymbols = waypoints.map(wp => wp.orbitals.map(wo => wo.symbol)).flat()
+      let wps = waypoints.filter(wp => orbsymbols.indexOf(wp.symbol) < 0)
+      let orbs = waypoints.filter(wp => orbsymbols.indexOf(wp.symbol) >= 0)
+      drawWaypoints(ctx, wps, orbs)
       canvas.onclick = () => {
-         console.log('reversing')
          wps = wps.reverse()
          clear(ctx)
-         drawWaypoints(ctx, wps)
+         drawWaypoints(ctx, wps, orbs)
       }
    }
 
