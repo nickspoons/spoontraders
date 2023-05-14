@@ -11,10 +11,10 @@ st.api = (() => {
          resp = await fetch(`${burl}/${url}`, options)
       }
       catch (err) {
-         return st.error.show(JSON.stringify(err))
+         return st.views.error.show(err)
       }
       if (!resp.ok)
-         return st.error.showFromResponse(resp)
+         return st.views.error.showFromResponse(resp)
       return (await resp.json())
    }
 

@@ -60,10 +60,10 @@
 
    const saveToken = async token => {
       st.state.token = token
-      if (!await st.agent.load())
+      if (!await st.views.agent.load())
          return
       st.cache.token = token
       st.state.registered = true
-      st.view.update()
+      st.view.navigate(st.view.View.AGENT)
    }
 })()

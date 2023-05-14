@@ -18,7 +18,6 @@ st.view = (() => {
 
    const getCurrent = () => {
       if (st.state.error) return View.ERROR
-      if (!st.state.registered) return View.REGISTRATION
       return selected
    }
 
@@ -39,8 +38,8 @@ st.view = (() => {
 
    const navigate = async toview => {
       if (toview === -1)
-         toview = selected;
-      [...dbts($nav, 'a')].forEach(a => {
+         toview = st.state.registered ? selected : View.REGISTRATION;
+      dbts($nav, 'a').forEach(a => {
          if (Number(a.dataset.id) === toview)
             a.classList.add('active')
          else
@@ -63,8 +62,15 @@ st.view = (() => {
          if ($currentView.onactivate)
             await $currentView.onactivate()
       }
-      if (st.state.registered)
-         $nav.classList.remove('invisible')
+      $nav.classList.remove('invisible')
+      dbts($nav, 'a').forEach(a => {
+         if (!st.state.registered && !a.classList.contains('unregistered'))
+            a.classList.add('hidden')
+         else if (st.state.registered && a.classList.contains('only'))
+            a.classList.add('hidden')
+         else
+            a.classList.remove('hidden')
+      })
    }
 
    return {
