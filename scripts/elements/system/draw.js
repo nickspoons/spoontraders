@@ -1,19 +1,42 @@
 st.elements.system = (() => {
+   const offsetBy = 1000
+   const scaleBy = 10
+
    const clear = ctx => {
       ctx.fillStyle = '#1d2021';
-      ctx.fillRect(0, 0, 2000, 2000);
+      ctx.fillRect(0, 0, offsetBy * 2, offsetBy * 2);
+   }
+
+   const getMouse = (canvas, ev) => {
+      const raw = st.utils.canvas.getMouse(canvas, ev)
+      return {
+         x: Math.round((raw.x - offsetBy) / scaleBy),
+         y: Math.round((raw.y - offsetBy) / scaleBy)
+      }
+   }
+
+   const displayDetail = (canvas, wp) => {
+      alert(`${wp.symbol} (${wp.type}) ${wp.orbitals.map(o => o.symbol).join(', ')}`)
    }
 
    const drawWaypoints = (ctx, wps, orbs) => {
+      const circle = (waypoint, radius) =>
+         ctx.arc(
+            offsetBy + waypoint.x * scaleBy,
+            offsetBy + waypoint.y * scaleBy,
+            radius,
+            0,
+            2 * Math.PI)
+
       wps.forEach(wp => {
          ctx.beginPath()
-         let radius
+         let radius = 0
          if (wp.type === 'PLANET') {
             ctx.fillStyle = `#b8bb26`
             radius = 50
          }
          else if (wp.type === 'GAS_GIANT') {
-            ctx.fillStyle = `#98971a`
+            ctx.fillStyle = `#79740e`
             radius = 80
          }
          else if (wp.type === 'ASTEROID_FIELD') {
@@ -21,39 +44,43 @@ st.elements.system = (() => {
             radius = 30
          }
          else if (wp.type === 'JUMP_GATE') {
-            ctx.fillStyle = `#83a598`
+            ctx.fillStyle = `#689d6a`
             radius = 30
          }
          else {
             ctx.fillStyle = `#fb4934`
             radius = 10
          }
-         ctx.arc(1000 + wp.x * 10, 1000 + wp.y * 10, radius, 0, 2 * Math.PI)
+         circle(wp, radius)
          ctx.fill()
          ctx.strokeStyle = '#f9f5d7'
-         ctx.lineWidth = 2
+         ctx.lineWidth = 5
          ctx.stroke()
-         wp.orbitals.forEach(wo => {
+         for (const wo of wp.orbitals) {
             const orb = orbs.find(ob => ob.symbol === wo.symbol)
-            if (!orb)
-               console.log(`Orbital ${wo.symbol} not found`)
-            else {
-               radius += 10
-               ctx.lineWidth = 10
-               if (orb.type === 'MOON')
-                  ctx.strokeStyle = `#83a598`
-               else if (orb.type === 'ORBITAL_STATION')
-                  ctx.strokeStyle = `#b16286`
-               else
-                  ctx.fillStyle = `#fb4934`
-               ctx.arc(1000 + wp.x * 10, 1000 + wp.y * 10, radius, 0, 2 * Math.PI)
-               ctx.stroke()
-               ctx.strokeStyle = '#f9f5d7'
-               ctx.lineWidth = 2
-               ctx.lineCap = 'square'
-               ctx.stroke()
+            if (!orb) {
+               alert(`Orbital ${wo.symbol} not found`)
+               continue
             }
-         })
+            ctx.beginPath()
+            radius += 5
+            ctx.lineWidth = 10
+            if (orb.type === 'MOON')
+               ctx.strokeStyle = `#83a598`
+            else if (orb.type === 'ORBITAL_STATION')
+               ctx.strokeStyle = `#b16286`
+            else
+               ctx.strokeStyle = `#fb4934`
+            circle(wp, radius)
+            ctx.stroke()
+            ctx.beginPath()
+            radius += 5
+            circle(wp, radius)
+            ctx.strokeStyle = '#f9f5d7'
+            ctx.lineWidth = 5
+            ctx.stroke()
+         }
+         wp.radius = radius / scaleBy
       })
    }
 
@@ -64,8 +91,17 @@ st.elements.system = (() => {
       let wps = waypoints.filter(wp => orbsymbols.indexOf(wp.symbol) < 0)
       let orbs = waypoints.filter(wp => orbsymbols.indexOf(wp.symbol) >= 0)
       drawWaypoints(ctx, wps, orbs)
-      canvas.onclick = () => {
-         wps = wps.reverse()
+      canvas.onclick = ev => {
+         const coord = getMouse(canvas, ev)
+         const reversed = wps.map((wp, i, a) => a[a.length - 1 - i])
+         for (const wp of reversed)
+            if (st.utils.canvas.isInsideCircle(wp, coord)) {
+               displayDetail(canvas, wp)
+               return
+            }
+         // If a waypoint was not clicked, redraw reversed (to toggle
+         // overlapping waypoint display/click order
+         wps = reversed
          clear(ctx)
          drawWaypoints(ctx, wps, orbs)
       }
@@ -115,3 +151,4 @@ st.elements.system = (() => {
 // #8f3f71
 // #427b58
 // #af3a03
+
