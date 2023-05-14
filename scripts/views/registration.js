@@ -1,5 +1,5 @@
 (() => {
-   const seed = genSeed()
+   const seed = st.seed()
    st.view.get(st.view.View.REGISTRATION).innerHTML = `
 <div class="wrapping-row seed-${seed}">
    <form id="reg-form">

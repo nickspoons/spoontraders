@@ -1,4 +1,9 @@
-const seed = Math.random()
+// Initialise global st object
+const st = {
+   seed: () => Math.random().toString(36).slice(2)
+}
+
+const s = st.seed()
 const scripts = [
    'utils',
    'globals',
@@ -14,5 +19,5 @@ const scripts = [
    'load'
 ]
 scripts.forEach(scriptName =>
-   document.writeln(`<script defer src="scripts/${scriptName}.js?s=${seed}"><\/script>`))
+   document.writeln(`<script defer src="scripts/${scriptName}.js?s=${s}"><\/script>`))
 

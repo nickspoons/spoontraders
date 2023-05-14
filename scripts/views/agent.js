@@ -7,7 +7,7 @@ st.views.agent = (() => {
          return false
       const data = agentData.data
       st.agent.headquarters = data.headquarters
-      const seed = genSeed()
+      const seed = st.seed()
       st.view.get(thisView).innerHTML = `
 <h2>${data.symbol}</h2>
 

@@ -12,7 +12,7 @@ st.views.waypoint = (() => {
       const meta = waypointsData.meta
       currentSystemID = systemID
 
-      const seed = genSeed()
+      const seed = st.seed()
       st.view.current.innerHTML = `
 <h2>System: ${systemID}</h2>
 
