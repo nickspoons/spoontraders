@@ -1,4 +1,4 @@
-st.elements.system = (() => {
+st.elements.system.draw = (() => {
    const offsetBy = 1000
    const scaleBy = 10
 
@@ -13,10 +13,6 @@ st.elements.system = (() => {
          x: Math.round((raw.x - offsetBy) / scaleBy),
          y: Math.round((raw.y - offsetBy) / scaleBy)
       }
-   }
-
-   const displayDetail = (canvas, wp) => {
-      alert(`${wp.symbol} (${wp.type}) ${wp.orbitals.map(o => o.symbol).join(', ')}`)
    }
 
    const drawWaypoints = (ctx, wps, orbs) => {
@@ -61,7 +57,7 @@ st.elements.system = (() => {
       })
    }
 
-   const draw = (canvas, waypoints) => {
+   const system = (canvas, waypoints) => {
       const ctx = canvas.getContext('2d');
       clear(ctx)
       let orbsymbols = waypoints.map(wp => wp.orbitals.map(wo => wo.symbol)).flat()
@@ -69,11 +65,12 @@ st.elements.system = (() => {
       let orbs = waypoints.filter(wp => orbsymbols.indexOf(wp.symbol) >= 0)
       drawWaypoints(ctx, wps, orbs)
       canvas.onclick = ev => {
+         st.elements.system.render.clearFloats()
          const coord = getMouse(canvas, ev)
          const reversed = wps.map((wp, i, a) => a[a.length - 1 - i])
          for (const wp of reversed)
             if (st.utils.canvas.isInsideCircle(wp, coord)) {
-               displayDetail(canvas, wp)
+               st.elements.system.render.floatWaypoint(wp, { x: ev.clientX, y: ev.clientY })
                return
             }
          // If a waypoint was not clicked, redraw reversed (to toggle
@@ -84,5 +81,5 @@ st.elements.system = (() => {
       }
    }
 
-   return { draw }
+   return { system }
 })()

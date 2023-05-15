@@ -10,6 +10,7 @@ st.state = {
 
 // Namespaces
 st.elements = { }
+st.elements.system = { }
 st.views = { }
 
 // Constants

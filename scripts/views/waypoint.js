@@ -9,6 +9,7 @@ st.views.waypoint = (() => {
       let waypointsData = await st.api.get(`systems/${systemID}/waypoints`)
       if (!waypointsData)
          return
+      const waypoints = waypointsData.data
       const meta = waypointsData.meta
       currentSystemID = systemID
 
@@ -20,28 +21,7 @@ st.views.waypoint = (() => {
 <canvas height="2000" width="2000" id="canvas-${seed}"></canvas>
 
 <div class="seed-${seed}">
-   ${waypointsData.data.map(wp => `
-   <div class="waypoint">
-      <h3 title="${split(wp.symbol).waypointID} - ${wp.faction.symbol}">
-         ${split(wp.symbol).waypointID}
-      </h3>
-      <dl>
-         <dt>Type</dt>
-         <dd>${wp.type}</dd>
-         <dt>Coordinates</dt>
-         <dd>${wp.x}:${wp.y}</dd>
-
-         ${wp.orbitals.length
-         ? `<dt>Orbitals</dt>
-         <dd>${wp.orbitals.map(o => `<a href="" data-id="${o.symbol}">${o.symbol}</a>`).join('')}</dd>`
-         : ''}
-
-         <dt>Chart submitted</dt>
-         <dd>${new Date(wp.chart.submittedOn).toLocaleDateString()}, ${wp.chart.submittedBy}</dd>
-      </dl>
-      ${wp.traits.map(t => `<span class="trait" title="${t.symbol}: ${t.description}">${t.name}</span>`).join(', ')}
-   </div>
-`).join('')}
+   ${waypoints.map(wp => st.elements.system.render.waypoint(wp)).join('')}
 </div>
 
 <style>
@@ -58,14 +38,10 @@ st.views.waypoint = (() => {
    }
    .seed-${seed} .waypoint {
       background-color: ${st.colors.backgroundDark};
-      padding: 0.5em;
-      border: 1px solid ${st.colors.border};
-      border-radius: 0.5em 0;
-      position: relative;
    }
 </style>
 `
-      st.elements.system.draw(dbi(`canvas-${seed}`), waypointsData.data)
+      st.elements.system.draw.system(dbi(`canvas-${seed}`), waypoints)
       st.view.loading = false
    }
 
