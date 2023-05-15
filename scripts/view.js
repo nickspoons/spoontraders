@@ -39,7 +39,7 @@ st.view = (() => {
    const navigate = async toview => {
       st.elements.system.render.clearFloats()
       if (toview === -1)
-         toview = st.state.registered ? selected : View.REGISTRATION;
+         toview = st.state.registered ? selected : View.REGISTRATION
       dbts($nav, 'a').forEach(a => {
          if (View[a.dataset.id] === toview)
             a.classList.add('active')

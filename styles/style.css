@@ -174,23 +174,23 @@ details pre {
    to { transform: rotate(359deg); }
 }
 
-/* =============================== Waypoints ================================ */
+/* ================================ Floaters ================================ */
 
-#floating-waypoint {
+.floater {
    min-width: 20em;
    position: absolute;
    z-index: 1
 }
-.waypoint {
+.floater > div {
    background-color: #3c3836;
    padding: 0.5em;
    border: 1px solid #ebdbb29a;
    border-radius: 0.5em 0;
 }
-#floating-waypoint .waypoint h3 {
+.floater > div > h3 {
    margin-top: 0;
 }
-#floating-waypoint hr {
+.floater hr {
    border: 0;
    border-top: 1px solid #ebdbb29a;
    margin: 0.5em -0.5em;

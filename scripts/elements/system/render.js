@@ -1,6 +1,6 @@
 st.elements.system.render = (() => {
 
-   const clearFloats = () => dbi('floating-waypoint').innerHTML = ''
+   const clearFloats = () => dqss('.floater').forEach(f => f.innerHTML = '')
 
    const floatWaypoint = (wp, point, orbitals) => {
       const floater = dbi('floating-waypoint')
