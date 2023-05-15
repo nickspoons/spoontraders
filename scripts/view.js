@@ -25,7 +25,7 @@ st.view = (() => {
    $nav.onclick = async ce => {
       ce.preventDefault()
       if (ce.target.tagName === 'A')
-         navigate(Number(ce.target.dataset.id))
+         navigate(View[ce.target.dataset.id])
    }
 
    const $loading = dbi('loading')
@@ -41,7 +41,7 @@ st.view = (() => {
       if (toview === -1)
          toview = st.state.registered ? selected : View.REGISTRATION;
       dbts($nav, 'a').forEach(a => {
-         if (Number(a.dataset.id) === toview)
+         if (View[a.dataset.id] === toview)
             a.classList.add('active')
          else
             a.classList.remove('active')
