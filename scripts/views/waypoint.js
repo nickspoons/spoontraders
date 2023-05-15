@@ -46,7 +46,7 @@ st.views.waypoint = (() => {
 
 <style>
    #canvas-${seed} {
-      border: 1px solid #ebdbb29a;
+      border: 1px solid ${st.colors.border};
       width: 100%;
    }
 
@@ -57,9 +57,9 @@ st.views.waypoint = (() => {
       gap: 0.5em;
    }
    .seed-${seed} .waypoint {
-      background-color: #1d2021;
+      background-color: ${st.colors.backgroundDark};
       padding: 0.5em;
-      border: 1px solid #ebdbb29a;
+      border: 1px solid ${st.colors.border};
       border-radius: 0.5em 0;
       position: relative;
    }
