@@ -20,24 +20,10 @@ st.views.waypoint = (() => {
 <label for="canvas-${seed}">${meta.limit} of ${meta.total} waypoints</label>
 <canvas height="2000" width="2000" id="canvas-${seed}"></canvas>
 
-<div class="seed-${seed}">
-   ${waypoints.map(wp => st.elements.system.render.waypoint(wp)).join('')}
-</div>
-
 <style>
    #canvas-${seed} {
       border: 1px solid ${st.colors.border};
       width: 100%;
-   }
-
-   .seed-${seed} {
-      display: flex;
-      flex-basis: 0;
-      flex-direction: column;
-      gap: 0.5em;
-   }
-   .seed-${seed} .waypoint {
-      background-color: ${st.colors.backgroundDark};
    }
 </style>
 `

@@ -43,7 +43,7 @@ st.elements.system.draw = (() => {
             ctx.beginPath()
             radius += 5
             ctx.lineWidth = 10
-            ctx.strokeStyle = st.colors.orbital[orb.type] || st.colors.orbital.unknown
+            ctx.strokeStyle = st.colors.waypoint[orb.type] || st.colors.waypoint.unknown
             circle(wp, radius)
             ctx.stroke()
             ctx.beginPath()
@@ -70,7 +70,10 @@ st.elements.system.draw = (() => {
          const reversed = wps.map((wp, i, a) => a[a.length - 1 - i])
          for (const wp of reversed)
             if (st.utils.canvas.isInsideCircle(wp, coord)) {
-               st.elements.system.render.floatWaypoint(wp, { x: ev.clientX, y: ev.clientY })
+               st.elements.system.render.floatWaypoint(
+                  wp,
+                  { x: ev.clientX, y: ev.clientY },
+                  orbs.filter(o => wp.orbitals.map(wo => wo.symbol).indexOf(o.symbol) >= 0))
                return
             }
          // If a waypoint was not clicked, redraw reversed (to toggle

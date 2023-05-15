@@ -26,9 +26,6 @@ st.colors = {
       GAS_GIANT: '#79740e',
       ASTEROID_FIELD: '#665c54',
       JUMP_GATE: '#689d6a',
-      unknown: '#fb4934'
-   },
-   orbital: {
       MOON: '#83a598',
       ORBITAL_STATION: '#b16286',
       unknown: '#fb4934'

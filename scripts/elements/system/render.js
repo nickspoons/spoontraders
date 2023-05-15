@@ -2,9 +2,9 @@ st.elements.system.render = (() => {
 
    const clearFloats = () => dbi('floating-waypoint').innerHTML = ''
 
-   const floatWaypoint = (wp, point) => {
+   const floatWaypoint = (wp, point, orbitals) => {
       const floater = dbi('floating-waypoint')
-      floater.innerHTML = waypoint(wp)
+      floater.innerHTML = waypoint(wp, orbitals)
       floater.style.top = `${point.y}px`
       floater.style.left = `${point.x}px`
       const frect = floater.getBoundingClientRect()
@@ -15,18 +15,24 @@ st.elements.system.render = (() => {
          floater.style.left = (brect.width - frect.width - 2) + 'px'
    }
 
-   const waypoint = wp => `
+   const waypointBody = wp => `
+<h3 title="${wp.symbol} - ${wp.faction.symbol}"
+      style="color: ${st.colors.waypoint[wp.type] || st.colors.waypoint.unknown}">
+   ${wp.symbol}
+</h3>
+<dl title="${`
+   Coordinates ${wp.x}:${wp.y}
+   Chart submitted: ${new Date(wp.chart.submittedOn).toLocaleDateString()}, ${wp.chart.submittedBy}
+`}">
+   <dt>Type</dt>
+   <dd>${wp.type}</dd>
+</dl>
+${wp.traits.map(t => `<span class="trait" title="${t.symbol}: ${t.description}">${t.name}</span>`).join(', ')}`
+
+   const waypoint = (wp, orbitals) => `
 <div class="waypoint">
-   <h3 title="${wp.symbol} - ${wp.faction.symbol}">${wp.symbol}</h3>
-   <dl>
-      <dt>Type</dt>
-      <dd>${wp.type}</dd>
-      <dt>Coordinates</dt>
-      <dd>${wp.x}:${wp.y}</dd>
-      <dt>Chart submitted</dt>
-      <dd>${new Date(wp.chart.submittedOn).toLocaleDateString()}, ${wp.chart.submittedBy}</dd>
-   </dl>
-   ${wp.traits.map(t => `<span class="trait" title="${t.symbol}: ${t.description}">${t.name}</span>`).join(', ')}
+   ${waypointBody(wp)}
+   ${(orbitals || []).map(o => '<hr>' + waypointBody(o)).join('')}
 </div>
 `
 
