@@ -93,6 +93,28 @@ pre {
    overflow: auto;
 }
 
+details summary {
+   cursor: pointer;
+   display: inline;
+   outline: none;
+}
+details summary:focus-visible {
+   outline: auto;
+}
+details p,
+details pre {
+   background-color: #1d2021;
+   border: 1px solid #ebdbb29a;
+   border-radius: 0.3em 0;
+   padding: 0.5em;
+}
+details p {
+}
+details pre {
+   white-space: pre-wrap;
+   word-wrap: break-word;
+}
+
 .wrapping-row {
    display: flex;
    flex-basis: 0;

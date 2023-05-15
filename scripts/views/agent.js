@@ -18,7 +18,7 @@ st.views.agent = (() => {
    <dd>${data.credits}</dd>
 </dl>
 
-<details class="details-${seed}">
+<details>
    <summary>Access token</summary>
    <pre>${st.state.token}</pre>
 </details>
@@ -26,25 +26,6 @@ st.views.agent = (() => {
 <button id="button-${seed}">
    Log out
 </button>
-
-<style>
-   .details-${seed} summary {
-      cursor: pointer;
-      display: inline;
-      outline: none;
-   }
-   .details-${seed} summary:focus-visible {
-      outline: auto;
-   }
-   .details-${seed} pre {
-      background-color: #1d2021;
-      border: 1px solid #928374;
-      border-radius: 0.3em 0;
-      padding: 0.5em;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-   }
-</style>
 `
       dbi(`a-${seed}`).onclick = ce => {
          ce.preventDefault()
