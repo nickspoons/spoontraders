@@ -18,6 +18,8 @@ st.colors = {
    foregroundBright: '#f9f5d7',
    foreground: '#ebdbb2',
    border: '#ebdbb29a',
+   borderBright: '#ebdbb2',
+   borderDim: '#ebdbb222',
    backgroundDark: '#1d2021',
    backgroundMedium: '#3c3836',
 
