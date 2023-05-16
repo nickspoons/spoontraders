@@ -17,8 +17,8 @@ const scripts = [
    'views/error',
    'views/registration',
    'views/agent',
+   'views/system',
    'views/status',
-   'views/waypoint',
    'load'
 ]
 scripts.forEach(scriptName =>

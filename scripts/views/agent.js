@@ -29,8 +29,8 @@ st.views.agent = (() => {
 `
       dbi(`a-${seed}`).onclick = ce => {
          ce.preventDefault()
-         st.view.navigate(st.view.View.WAYPOINT)
-         st.views.waypoint.load(data.headquarters)
+         st.view.navigate(st.view.View.SYSTEM)
+         st.views.system.load(data.headquarters)
       }
       dbi(`button-${seed}`).onclick = () => {
          st.cache.token = null

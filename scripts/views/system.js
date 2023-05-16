@@ -1,4 +1,4 @@
-st.views.waypoint = (() => {
+st.views.system = (() => {
    let currentSystemID = null
 
    const load = async id => {
