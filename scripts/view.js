@@ -37,7 +37,7 @@ st.view = (() => {
    }
 
    const navigate = async toview => {
-      st.elements.system.render.clearFloats()
+      st.float.clear()
       if (toview === -1)
          toview = st.state.registered ? selected : View.REGISTRATION
       dbts($nav, 'a').forEach(a => {

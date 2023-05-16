@@ -10,6 +10,7 @@ const scripts = [
    'cache',
    'view',
    'api',
+   'float',
    'elements/system/render',
    'elements/system/draw',
    'views/error',
