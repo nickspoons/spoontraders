@@ -148,6 +148,23 @@ canvas {
    }
 }
 
+/* =============================== Data cards =============================== */
+
+.datacard {
+   background-color: #1d2021;
+   padding: 0.5em;
+   border: 1px solid #ebdbb29a;
+   border-radius: 0.5em 0;
+}
+.datacard h3 {
+   margin-top: 0;
+}
+.datacard hr {
+   border: 0;
+   border-top: 1px solid #ebdbb29a;
+   margin: 0.5em -0.5em;
+}
+
 /* ============================ Loading spinner ============================= */
 
 #loading {
@@ -185,17 +202,6 @@ canvas {
    position: absolute;
    z-index: 1
 }
-.floater > div {
+.floater .datacard {
    background-color: #3c3836;
-   padding: 0.5em;
-   border: 1px solid #ebdbb29a;
-   border-radius: 0.5em 0;
-}
-.floater > div > h3 {
-   margin-top: 0;
-}
-.floater hr {
-   border: 0;
-   border-top: 1px solid #ebdbb29a;
-   margin: 0.5em -0.5em;
 }

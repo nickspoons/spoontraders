@@ -15,7 +15,7 @@ st.elements.waypoint = (() => {
 ${wp.traits.map(t => `<span class="trait" title="${t.symbol}: ${t.description}">${t.name}</span>`).join(', ')}`
 
    const render = wp => `
-<div class="waypoint">
+<div class="waypoint datacard">
    ${renderDetails(wp)}
    ${wp.orbitals.map(o => '<hr>' + renderDetails(o)).join('')}
 </div>
