@@ -95,7 +95,6 @@ pre {
 
 details summary {
    cursor: pointer;
-   display: inline;
    outline: none;
 }
 details summary:focus-visible {
