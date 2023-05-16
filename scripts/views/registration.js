@@ -1,7 +1,5 @@
 (() => {
 
-   let allFactions = []
-
    const addFactionHandlers = $factions => {
       const factionDivs = dqss(`#${$factions.id} > div`)
       factionDivs.forEach(factionDiv =>
@@ -12,9 +10,8 @@
    }
 
    const loadFactions = async $factions => {
-      const { data } = await st.api.get('factions')
-      allFactions = data
-      $factions.innerHTML = data.map(faction => `
+      const factions = await st.data.faction.findAll()
+      $factions.innerHTML = factions.map(faction => `
 <div class="faction ${faction.symbol === 'COSMIC' ? 'selected' : ''}"
       data-id="${faction.symbol}">
    <h3>${faction.name}</h3>

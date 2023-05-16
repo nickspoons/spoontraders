@@ -9,12 +9,8 @@ st.data.waypoint = (() => {
    const splitSymbol = waypointSymbol => re.exec(waypointSymbol).groups
 
    const fetch = async waypointSymbol => {
-      let { systemID, waypointID } = splitSymbol(waypointSymbol)
-      let waypointsData = await st.api.get(`systems/${systemID}/waypoints`)
-      if (!waypointsData)
-         return
-      const data = waypointsData.data
-      const meta = waypointsData.meta
+      const { systemID, waypointID } = splitSymbol(waypointSymbol)
+      const { data, meta } = await st.api.get(`systems/${systemID}/waypoints`)
       if (meta.total > 10) alert(`TODO: something with meta`)
       allwps = [
          ...allwps,

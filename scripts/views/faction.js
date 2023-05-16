@@ -1,9 +1,9 @@
 st.views.faction = (() => {
    const load = async () => {
       st.view.loading = true
-      const { data } = await st.api.get('factions')
+      const factions = await st.data.faction.findAll()
       const seed = st.seed()
-      st.view.current.innerHTML = data.map(faction => `
+      st.view.current.innerHTML = factions.map(faction => `
 <div class="faction ${faction.symbol === 'COSMIC' ? 'selected' : ''}"
       data-id="${faction.symbol}">
    <h3>${faction.name}</h3>
