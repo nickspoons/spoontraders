@@ -1,6 +1,7 @@
 st.views.faction = (() => {
-   const load = async () => {
+   const load = async forceRefresh => {
       st.view.loading = true
+      await st.data.faction.enrich(forceRefresh)
       const factions = await st.data.faction.findAll()
       const seed = st.seed()
       st.view.current.innerHTML = `
@@ -23,7 +24,9 @@ st.views.faction = (() => {
       }
    }
 </style>
+<button id="btn-${seed}" class="refresh">Refresh</button>
 `
+      dbi(`btn-${seed}`).onclick = () => load(true)
       const hqlinks = dqss(`#factions-${seed} .faction a[data-id]`)
       hqlinks.forEach(link => link.onclick = ev => {
          ev.preventDefault()
