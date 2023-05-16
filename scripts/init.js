@@ -18,6 +18,7 @@ const scripts = [
    'views/registration',
    'views/agent',
    'views/system',
+   'views/faction',
    'views/status',
    'load'
 ]
