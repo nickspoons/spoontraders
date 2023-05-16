@@ -11,6 +11,7 @@ const scripts = [
    'view',
    'api',
    'float',
+   'data/waypoint',
    'elements/system/render',
    'elements/system/draw',
    'views/error',

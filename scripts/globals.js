@@ -9,6 +9,7 @@ st.state = {
 }
 
 // Namespaces
+st.data = { }
 st.elements = { }
 st.elements.system = { }
 st.views = { }

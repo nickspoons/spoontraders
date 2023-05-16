@@ -15,7 +15,7 @@ st.elements.system.draw = (() => {
       }
    }
 
-   const drawWaypoints = (ctx, wps, orbs) => {
+   const drawWaypoints = (ctx, waypoints) => {
       const circle = (waypoint, radius) =>
          ctx.arc(
             offsetBy + waypoint.x * scaleBy,
@@ -24,7 +24,7 @@ st.elements.system.draw = (() => {
             0,
             2 * Math.PI)
 
-      wps.forEach(wp => {
+      waypoints.forEach(wp => {
          ctx.beginPath()
          let radius = 0
          ctx.fillStyle = st.colors.waypoint[wp.type] || st.colors.waypoint.unknown
@@ -34,12 +34,7 @@ st.elements.system.draw = (() => {
          ctx.strokeStyle = st.colors.foregroundBright
          ctx.lineWidth = 5
          ctx.stroke()
-         for (const wo of wp.orbitals) {
-            const orb = orbs.find(ob => ob.symbol === wo.symbol)
-            if (!orb) {
-               alert(`Orbital ${wo.symbol} not found`)
-               continue
-            }
+         for (const orb of wp.orbitals) {
             ctx.beginPath()
             radius += 5
             ctx.lineWidth = 10
@@ -57,30 +52,27 @@ st.elements.system.draw = (() => {
       })
    }
 
-   const system = (canvas, waypoints) => {
+   const system = async (canvas, systemID) => {
       const ctx = canvas.getContext('2d');
       clear(ctx)
-      let orbsymbols = waypoints.map(wp => wp.orbitals.map(wo => wo.symbol)).flat()
-      let wps = waypoints.filter(wp => orbsymbols.indexOf(wp.symbol) < 0)
-      let orbs = waypoints.filter(wp => orbsymbols.indexOf(wp.symbol) >= 0)
-      drawWaypoints(ctx, wps, orbs)
+      let waypoints = await st.data.waypoint.findInSystem(systemID)
+      drawWaypoints(ctx, waypoints)
       canvas.onclick = ev => {
-         st.elements.system.render.clearFloats()
+         st.float.clear()
          const coord = getMouse(canvas, ev)
-         const reversed = wps.map((wp, i, a) => a[a.length - 1 - i])
+         const reversed = waypoints.map((wp, i, a) => a[a.length - 1 - i])
          for (const wp of reversed)
             if (st.utils.canvas.isInsideCircle(wp, coord)) {
-               st.elements.system.render.floatWaypoint(
-                  wp,
-                  { x: ev.clientX, y: ev.clientY },
-                  orbs.filter(o => wp.orbitals.map(wo => wo.symbol).indexOf(o.symbol) >= 0))
+               st.float.show(
+                  { x: ev.pageX, y: ev.pageY },
+                  st.elements.waypoint.render(wp))
                return
             }
          // If a waypoint was not clicked, redraw reversed (to toggle
          // overlapping waypoint display/click order
-         wps = reversed
+         waypoints = reversed
          clear(ctx)
-         drawWaypoints(ctx, wps, orbs)
+         drawWaypoints(ctx, waypoints)
       }
    }
 
