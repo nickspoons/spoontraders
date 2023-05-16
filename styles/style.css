@@ -114,6 +114,11 @@ details pre {
    word-wrap: break-word;
 }
 
+canvas {
+   border: 1px solid #ebdbb29a;
+   width: 100%;
+}
+
 .wrapping-row {
    display: flex;
    flex-basis: 0;
