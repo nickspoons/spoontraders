@@ -14,6 +14,7 @@ const scripts = [
    'data/faction',
    'data/waypoint',
    'elements/system/draw',
+   'elements/faction',
    'elements/waypoint',
    'views/error',
    'views/registration',

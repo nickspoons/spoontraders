@@ -3,23 +3,33 @@ st.views.faction = (() => {
       st.view.loading = true
       const factions = await st.data.faction.findAll()
       const seed = st.seed()
-      st.view.current.innerHTML = factions.map(faction => `
-<div class="faction ${faction.symbol === 'COSMIC' ? 'selected' : ''}"
-      data-id="${faction.symbol}">
-   <h3>${faction.name}</h3>
-   <div class="details">
-      <p>${faction.description}</p>
+      st.view.current.innerHTML = `
+<h2>Factions</h2>
 
-      ${faction.traits.map(t => `
-      <details>
-         <summary title="${t.symbol}">${t.name}</summary>
-         <p>${t.description}</p>
-      </details>`).join('')}
-
-   </div>
+<div id="factions-${seed}">
+   ${factions.map(f => st.elements.faction.render(f)).join('')}
 </div>
+
+<style>
+   #factions-${seed} .faction {
+      margin-bottom: 2em;
+   }
+   #factions-${seed} .faction:last-child {
+      margin-bottom: 0;
+   }
+   @media all and (max-width: 30em) {
+      #factions-${seed} .faction {
+         margin-bottom: 1em;
+      }
+   }
+</style>
 `
-      ).join('')
+      const hqlinks = dqss(`#factions-${seed} .faction a[data-id]`)
+      hqlinks.forEach(link => link.onclick = ev => {
+         ev.preventDefault()
+         st.view.navigate(st.view.View.SYSTEM)
+         st.views.system.load(link.dataset.id)
+      })
       st.view.loading = false
    }
 
