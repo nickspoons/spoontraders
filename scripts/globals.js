@@ -23,6 +23,8 @@ st.colors = {
    borderDim: '#ebdbb222',
    backgroundDark: '#1d2021',
    backgroundMedium: '#3c3836',
+   active: '#83a598',
+   success: '#b8bb26',
 
    waypoint: {
       PLANET: '#b8bb26',

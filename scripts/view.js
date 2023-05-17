@@ -2,14 +2,18 @@ st.view = (() => {
    const View = {
       REGISTRATION: 0,
       AGENT: 1,
-      SYSTEM: 2,
-      FACTION: 3,
-      STATUS: 4,
-      ERROR: 5
+      CONTRACT: 2,
+      SHIP: 3,
+      SYSTEM: 4,
+      FACTION: 5,
+      STATUS: 6,
+      ERROR: 7
    }
    const $$views = [ // NB: indexes match View ID's
       { view: dbi('view-registration') },
       { view: dbi('view-agent') },
+      { view: dbi('view-contract'), onactivate: async () => await st.views.contract.load() },
+      { view: dbi('view-ship'), onactivate: async () => await st.views.ship.load() },
       { view: dbi('view-system'), onactivate: async () => await st.views.system.load() },
       { view: dbi('view-faction'), onactivate: async () => await st.views.faction.load() },
       { view: dbi('view-status'), onactivate: async () => await st.views.status.load() },
