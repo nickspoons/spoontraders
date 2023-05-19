@@ -57,9 +57,16 @@ st.data.survey = (() => {
       }))
    }
 
+   const remove = (waypointSymbol, survey) => {
+      surveys[waypointSymbol] = (surveys[waypointSymbol] || [])
+         .filter(s => s.signature !== survey.signature)
+      st.cache.write('st.surveys', surveys)
+   }
+
    return {
       add,
       find,
-      findAll
+      findAll,
+      remove
    }
 })()

@@ -121,9 +121,11 @@
       ce.preventDefault()
       const symbol = $handle.value
       const faction = dqs(`#factions-${seed} > div.selected`).dataset.id
-      const regData = await st.api.post('register', { symbol, faction })
-      if (regData && regData.data)
-         await saveToken(regData.data.token)
+      const { ok, resp } = await st.api.post('register', { symbol, faction })
+      if (!ok)
+         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
+      else
+         await saveToken(resp.data.token)
    }
    const $factions = dbi(`factions-${seed}`)
    addFactionHandlers($factions)

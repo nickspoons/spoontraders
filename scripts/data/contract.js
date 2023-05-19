@@ -3,16 +3,22 @@ st.data.contract = (() => {
    let contracts = null
 
    const _fetch = async () => {
-      const { data, meta } = await st.api.get('my/contracts')
-      if (meta.total > 10) alert(`TODO: something with meta`)
-      contracts = data
+      const { ok, resp } = await st.api.get('my/contracts')
+      if (!ok) {
+         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
+         return []
+      }
+      contracts = resp.data
       return contracts
    }
 
    const accept = async id => {
-      const { agent } = await st.api.post(`my/contracts/${id}/accept`)
+      const { ok, resp } = await st.api.post(`my/contracts/${id}/accept`)
+      if (!ok)
+         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
+      else
       // TODO: update/refresh agent with updated credits
-      console.log(res)
+         console.log(res)
    }
 
    const deliver = async (id, shipSymbol) => {
@@ -38,8 +44,11 @@ st.data.contract = (() => {
       const tradeSymbol = delivery.tradeSymbol
       const units = ship.cargo.inventory.find(i => i.symbol === tradeSymbol).units
       const payload = { shipSymbol, tradeSymbol, units }
-      const { data } = await st.api.post(`my/contracts/${id}/deliver`, payload)
-      ship.cargo = data.cargo
+      const { ok, resp } = await st.api.post(`my/contracts/${id}/deliver`, payload)
+      if (!ok)
+         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
+      else
+         ship.cargo = resp.data.cargo
       if (sourceSymbol) {
          console.log(`Navigating to ${sourceSymbol}`)
          await new Promise(async resolve =>

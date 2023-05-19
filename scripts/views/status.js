@@ -1,7 +1,12 @@
 st.views.status = (() => {
    const load = async () => {
       st.view.loading = true
-      const data = await st.api.get('')
+      const { ok, resp } = await st.api.get('')
+      if (!ok) {
+         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
+         return
+      }
+      const data = resp
       const seed = st.seed()
       st.view.current.innerHTML = `
 <h2>Status</h2>

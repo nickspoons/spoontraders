@@ -8,11 +8,14 @@ st.data.waypoint = (() => {
 
    const _fetch = async waypointSymbol => {
       const { systemID, waypointID } = splitSymbol(waypointSymbol)
-      const { data, meta } = await st.api.get(`systems/${systemID}/waypoints`)
-      if (meta.total > 10) alert(`TODO: something with meta`)
+      const { ok, resp } = await st.api.get(`systems/${systemID}/waypoints`)
+      if (!ok) {
+         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
+         return null
+      }
       allwps = [
          ...allwps,
-         ...data.filter(d => allwps.map(wp => wp.symbol).indexOf(d.symbol) < 0)
+         ...resp.data.filter(d => allwps.map(wp => wp.symbol).indexOf(d.symbol) < 0)
       ]
       const osymbols = allwps.map(wp => wp.orbitals.map(wo => wo.symbol)).flat()
       const orbs = allwps.filter(wp => osymbols.indexOf(wp.symbol) >= 0)
@@ -49,9 +52,13 @@ st.data.waypoint = (() => {
 
    const market = async waypointSymbol => {
       const { systemID } = splitSymbol(waypointSymbol)
-      const { data } = await st.api.get(`systems/${systemID}/waypoints/${waypointSymbol}/market`)
-      if (data.tradeGoods || !(waypointSymbol in markets)) {
-         markets[waypointSymbol] = data
+      const { ok, resp } = await st.api.get(`systems/${systemID}/waypoints/${waypointSymbol}/market`)
+      if (!ok) {
+         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
+         return []
+      }
+      if (resp.data.tradeGoods || !(waypointSymbol in markets)) {
+         markets[waypointSymbol] = resp.data
          st.cache.write('st.waypoint-markets', markets)
       }
       return markets[waypointSymbol]

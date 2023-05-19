@@ -13,9 +13,10 @@ st.api = (() => {
       catch (err) {
          return st.views.error.show(err)
       }
-      if (!resp.ok)
-         return st.views.error.showFromResponse(resp)
-      return (await resp.json())
+      return {
+         ok: resp.ok,
+         resp: await resp.json()
+      }
    }
 
    const get = async url => {

@@ -2,10 +2,14 @@ st.views.agent = (() => {
    const thisView = st.view.View.AGENT
 
    const load = async () => {
-      const agentData = await st.api.get('my/agent')
-      if (!agentData)
+      const { ok, resp } = await st.api.get('my/agent')
+      if (!ok) {
+         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
          return false
-      const data = agentData.data
+      }
+      if (!resp)
+         return false
+      const data = resp.data
       st.agent.headquarters = data.headquarters
       const seed = st.seed()
       st.view.get(thisView).innerHTML = `

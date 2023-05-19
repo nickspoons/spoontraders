@@ -3,17 +3,22 @@ st.data.ship = (() => {
    let ships = null
 
    const _fetch = async () => {
-      const { data, meta } = await st.api.get('my/ships')
-      if (meta.total > 10) alert(`TODO: something with meta`)
-      ships = data
+      const { ok, resp } = await st.api.get('my/ships')
+      if (!ok)
+         return null
+      ships = resp.data
       return ships
    }
 
    const beginExtracting = async (contractID, shipSymbol) => {
       const ship = await find(shipSymbol)
+      if (!ship)
+         retun
       ship.extracting = true
       const waypointSymbol = ship.nav.waypointSymbol
       const contract = await st.data.contract.find(contractID)
+      if (!ship)
+         retun
       if (contract.terms.deliver.length > 1)
          alert(`There are ${contract.terms.deliver.length} terms deliveries...`)
       const delivery = contract.terms.deliver.find(d =>
@@ -36,21 +41,25 @@ st.data.ship = (() => {
             let onCooldown
             promises.push(new Promise(resolve => onCooldown = resolve))
             console.log(surveyData
-               ? `${shipSymbol} extracting with survey (${surveyData.score})`
+               ? `${shipSymbol} extracting with ${surveyData.score}-survey`
                : `${shipSymbol} extracting without survey`)
-            const { symbol, units } = await extract(shipSymbol, surveyData, onCooldown)
-            if (symbol === delivery.tradeSymbol)
-               console.log(`${shipSymbol} extracted ${units} IRON_ORE from ${waypointSymbol}`)
-            else {
-               let orbiting = false
-               if (ship.nav.status === 'IN_ORBIT') {
-                  orbiting = true
-                  await dock(shipSymbol)
+            const yield = await extract(shipSymbol, surveyData, onCooldown)
+            if (yield) {
+               const { symbol, units } = yield
+               if (symbol === delivery.tradeSymbol)
+                  console.log(`${shipSymbol} extracted ${units} IRON_ORE from ${waypointSymbol}`)
+               else {
+                  let orbiting = false
+                  if (ship.nav.status === 'IN_ORBIT') {
+                     orbiting = true
+                     await dock(shipSymbol)
+                  }
+                  const data = await sell(shipSymbol, symbol, units)
+                  if (data)
+                     console.log(`${shipSymbol} sold ${units} ${symbol} for ${data.transaction.totalPrice}`)
+                  if (orbiting)
+                     await orbit(shipSymbol)
                }
-               const data = await sell(shipSymbol, symbol, units)
-               console.log(`${shipSymbol} sold ${units} ${symbol} for ${data.transaction.totalPrice}`)
-               if (orbiting)
-                  await orbit(shipSymbol)
             }
          }
          if (ship.cargo.capacity - ship.cargo.units < 5)
@@ -62,6 +71,8 @@ st.data.ship = (() => {
 
    const beginSurveying = async shipSymbol => {
       const ship = await find(shipSymbol)
+      if (!ship)
+         retun
       ship.surveying = true
       while (ship.surveying) {
          console.log(`${shipSymbol} surveying ${ship.nav.waypointSymbol}`)
@@ -73,32 +84,67 @@ st.data.ship = (() => {
 
    const dock = async shipSymbol => {
       const ship = await find(shipSymbol)
-      const { data } = await st.api.post(`my/ships/${shipSymbol}/dock`)
-      ship.nav = data.nav
+      if (!ship)
+         retun
+      const { ok, resp } = await st.api.post(`my/ships/${shipSymbol}/dock`)
+      if (!ok)
+         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
+      else
+         ship.nav = resp.data.nav
    }
 
    const extract = async (shipSymbol, surveyData, onCooldown) => {
       const ship = await find(shipSymbol)
+      if (!ship) {
+         if (onCooldown) onCooldown()
+         return null
+      }
       const payload = surveyData ? { survey: surveyData.survey } : {}
-      const { data } = await st.api.post(`my/ships/${shipSymbol}/extract`, payload)
-      ship.cargo = data.cargo
+      const { ok, resp } = await st.api.post(`my/ships/${shipSymbol}/extract`, payload)
+      if (!ok) {
+         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
+         if (resp.error.code === 4221 || resp.error.code === 4224) {
+            st.data.survey.remove(ship.nav.waypointSymbol, surveyData.survey)
+            if (onCooldown) onCooldown()
+            return null
+         }
+         else if (onCooldown && resp.error.data && resp.error.data.cooldown)
+            setTimeout(onCooldown, resp.error.data.cooldown.remainingSeconds * 1000)
+         else if (onCooldown && resp.error.data && resp.error.data.secondsToArrival)
+            setTimeout(onCooldown, resp.error.data.secondsToArrival * 1000)
+         else if (onCooldown)
+            onCooldown()
+         return null
+      }
+      ship.cargo = resp.data.cargo
       if (onCooldown)
-         setTimeout(onCooldown, data.cooldown.totalSeconds * 1000 + 1000)
-      return data.extraction.yield
+         setTimeout(onCooldown, resp.data.cooldown.totalSeconds * 1000 + 1000)
+      return resp.data.extraction.yield
    }
 
-   const find = async symbol =>
-      (ships ? ships : await _fetch())
-         .find(s => s.symbol === symbol)
+   const find = async symbol => {
+      const ss = ships ? ships : await _fetch()
+      if (ss)
+         return ss.find(s => s.symbol === symbol)
+   }
 
    const findAll = async refresh => (ships && !refresh) ? ships : await _fetch()
 
    const navigate = async (shipSymbol, waypointSymbol, onArrival) => {
-      const payload = { waypointSymbol }
-      const { data } = await st.api.post(`my/ships/${shipSymbol}/navigate`, payload)
       const ship = await find(shipSymbol)
-      ship.nav = data.nav
-      const ms = new Date(data.nav.route.arrival) - new Date()
+      if (!ship) {
+         if (onArrival) onArrival()
+         return
+      }
+      const payload = { waypointSymbol }
+      const { ok, resp } = await st.api.post(`my/ships/${shipSymbol}/navigate`, payload)
+      if (!ok) {
+         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
+         if (onArrival) onArrival()
+         return
+      }
+      ship.nav = resp.data.nav
+      const ms = new Date(resp.data.nav.route.arrival) - new Date()
       console.log(`${shipSymbol} travelling for ${ms / 1000} seconds`)
       if (onArrival)
          setTimeout(onArrival, ms + 1000)
@@ -106,25 +152,52 @@ st.data.ship = (() => {
 
    const orbit = async shipSymbol => {
       const ship = await find(shipSymbol)
-      const { data } = await st.api.post(`my/ships/${shipSymbol}/orbit`)
-      ship.nav = data.nav
+      if (!ship)
+         retun
+      const { ok, resp } = await st.api.post(`my/ships/${shipSymbol}/orbit`)
+      if (!ok)
+         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
+      else
+         ship.nav = resp.data.nav
    }
 
-   const refuel = async shipSymbol =>
-      await st.api.post(`my/ships/${shipSymbol}/refuel`)
+   const refuel = async shipSymbol => {
+      const { ok, resp } = await st.api.post(`my/ships/${shipSymbol}/refuel`)
+      if (!ok)
+         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
+   }
 
    const sell = async (shipSymbol, symbol, units) => {
       const ship = await find(shipSymbol)
-      const { data } = await st.api.post(`my/ships/${shipSymbol}/sell`, { symbol, units })
-      ship.cargo = data.cargo
-      return data
+      if (!ship)
+         return null
+      const { ok, resp } = await st.api.post(`my/ships/${shipSymbol}/sell`, { symbol, units })
+      if (!ok) {
+         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
+         return null
+      }
+      ship.cargo = resp.data.cargo
+      return resp.data
    }
 
    const survey = async (shipSymbol, onCooldown) => {
       const ship = await find(shipSymbol)
+      if (!ship || ship.nav.status === 'IN_TRANSIT') {
+         if (onCooldown) onCooldown()
+         return
+      }
       if (ship.nav.status !== 'IN_ORBIT')
          await orbit(shipSymbol)
-      const { data } = await st.api.post(`my/ships/${shipSymbol}/survey`)
+      const { ok, resp } = await st.api.post(`my/ships/${shipSymbol}/survey`)
+      if (!ok) {
+         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
+         if (onCooldown && resp.error.data && resp.error.data.cooldown)
+            setTimeout(onCooldown, resp.error.data.cooldown.remainingSeconds * 1000)
+         else if (onCooldown)
+            onCooldown()
+         return
+      }
+      const data = resp.data
       const summary = data.surveys
          .map(s => `${s.size} - ${s.deposits.map(d => d.symbol).join(', ')}`)
          .join('\n')
