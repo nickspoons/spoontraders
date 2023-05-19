@@ -1,14 +1,12 @@
 st.data.waypoint = (() => {
 
    let allwps = []
+   let markets = st.cache.read('st.waypoint-markets') || {}
    let orbitals = {}
    let waypoints = {}
    let systems = {}
 
-   const re = /^(?<systemID>\w+-\w+)(-(?<waypointID>\w+))?/
-   const splitSymbol = waypointSymbol => re.exec(waypointSymbol).groups
-
-   const fetch = async waypointSymbol => {
+   const _fetch = async waypointSymbol => {
       const { systemID, waypointID } = splitSymbol(waypointSymbol)
       const { data, meta } = await st.api.get(`systems/${systemID}/waypoints`)
       if (meta.total > 10) alert(`TODO: something with meta`)
@@ -41,17 +39,31 @@ st.data.waypoint = (() => {
    const find = async waypointSymbol =>
       waypoints[waypointSymbol]
          || waypoints[orbitals[waypointSymbol]]
-         || await fetch(waypointSymbol)
+         || await _fetch(waypointSymbol)
 
    const findInSystem = async symbol => {
       let { systemID } = splitSymbol(symbol)
       return systems[systemID]
-         || await fetch(systemID)
+         || await _fetch(systemID)
    }
+
+   const market = async waypointSymbol => {
+      const { systemID } = splitSymbol(waypointSymbol)
+      const { data } = await st.api.get(`systems/${systemID}/waypoints/${waypointSymbol}/market`)
+      if (data.tradeGoods || !(waypointSymbol in markets)) {
+         markets[waypointSymbol] = data
+         st.cache.write('st.waypoint-markets', markets)
+      }
+      return markets[waypointSymbol]
+   }
+
+   const re = /^(?<systemID>\w+-\w+)(-(?<waypointID>\w+))?/
+   const splitSymbol = waypointSymbol => re.exec(waypointSymbol).groups
 
    return {
       find,
       findInSystem,
+      market,
       splitSymbol
    }
 })()

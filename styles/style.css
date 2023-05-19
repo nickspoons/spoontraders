@@ -101,7 +101,8 @@ details summary:focus-visible {
    outline: auto;
 }
 details p,
-details pre {
+details pre,
+details dl {
    background-color: #1d2021;
    border: 1px solid #ebdbb29a;
    border-radius: 0.3em 0;

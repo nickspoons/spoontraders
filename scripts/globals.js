@@ -25,6 +25,7 @@ st.colors = {
    backgroundMedium: '#3c3836',
    active: '#83a598',
    success: '#b8bb26',
+   query: '#8ec07c',
 
    waypoint: {
       PLANET: '#b8bb26',

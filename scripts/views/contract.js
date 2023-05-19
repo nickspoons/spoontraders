@@ -1,7 +1,7 @@
 st.views.contract = (() => {
    const load = async refresh => {
       st.view.loading = true
-      const contracts = await st.data.contract.find(refresh)
+      const contracts = await st.data.contract.findAll(refresh)
       const seed = st.seed()
       st.view.current.innerHTML = `
 <h2>Contracts</h2>
