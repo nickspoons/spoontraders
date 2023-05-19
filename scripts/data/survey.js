@@ -14,7 +14,7 @@ st.data.survey = (() => {
          if (tradeGood) {
             let price = tradeGood.sellPrice
             if (targets && targets.indexOf(tradeGood.symbol) >= 0)
-               price += 50
+               price = 50
             else if (targets)
                price -= 5
             score += price * sizes[survey.size]
@@ -24,7 +24,7 @@ st.data.survey = (() => {
             alert(`Unknown tradeGood ${d.symbol}`)
          }
       })
-      return score
+      return Math.round(score)
    }
 
    const add = (waypointSymbol, newSurveys) => {
