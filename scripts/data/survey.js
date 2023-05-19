@@ -2,9 +2,9 @@ st.data.survey = (() => {
 
    let surveys = st.cache.read('st.surveys') || {}
    let sizes = {
-      SMALL: 1,
-      MODERATE: 2,
-      LARGE: 3
+      SMALL: 0.8,
+      MODERATE: 1.0,
+      LARGE: 1.2
    };
 
    const _score = (survey, tradeGoods, targets) => {
@@ -15,10 +15,14 @@ st.data.survey = (() => {
             let price = tradeGood.sellPrice
             if (targets && targets.indexOf(tradeGood.symbol) >= 0)
                price += 50
+            else if (targets)
+               price -= 5
             score += price * sizes[survey.size]
          }
-         else
-            score -= sizes[survey.size]
+         else {
+            score -= 50
+            alert(`Unknown tradeGood ${d.symbol}`)
+         }
       })
       return score
    }

@@ -22,7 +22,7 @@ st.data.ship = (() => {
          let surveyData = await st.data.survey.find(waypointSymbol, [delivery.tradeSymbol])
          const mount = ship.mounts.find(m => m.symbol.startsWith('MOUNT_SURVEYOR'))
          if (mount && mount.deposits.find(d => d === delivery.tradeSymbol)) {
-            while (!surveyData || surveyData.score < 100 && ship.extracting) {
+            if (!surveyData || surveyData.score < st.constants.surveyingTarget && ship.extracting) {
                console.log(`${shipSymbol} surveying ${waypointSymbol}`)
                await new Promise(async resolve =>
                   await survey(shipSymbol, resolve))

@@ -8,6 +8,11 @@ st.state = {
    token: null
 }
 
+// Constants
+st.constants = {
+   surveyingTarget: 50
+}
+
 // Namespaces
 st.data = { }
 st.elements = { }

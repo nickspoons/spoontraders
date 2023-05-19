@@ -25,7 +25,10 @@ st.views.ship = (() => {
       border: 1px solid ${st.colors.query};
    }
 </style>
+
+<button id="btn-${seed}" class="refresh">Refresh</button>
 `
+      dbi(`btn-${seed}`).onclick = () => load()
       const hqlinks = dqss(`#ship-${seed} .ship a[data-id]`)
       hqlinks.forEach(link => link.onclick = ev => {
          ev.preventDefault()
