@@ -11,7 +11,7 @@ st.views.ship = (() => {
 </div>
 
 <style>
-   #ship-${seed} .ship dl.cargo  {
+   #ship-${seed} .ship .wrapping-row dl  {
       background-color: ${st.colors.backgroundMedium};
       border: 1px solid ${st.colors.border};
       border-radius: 0.3em 0;
