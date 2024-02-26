@@ -28,7 +28,7 @@ st.elements.system.draw = (() => {
          ctx.beginPath()
          let radius = 0
          ctx.fillStyle = st.colors.waypoint[wp.type] || st.colors.waypoint.unknown
-         radius = st.sizes.waypoint[wp.type] || st.colors.sizes.unknown
+         radius = st.sizes.waypoint[wp.type] || st.sizes.waypoint.unknown
          circle(wp, radius)
          ctx.fill()
          ctx.strokeStyle = st.colors.foregroundBright
