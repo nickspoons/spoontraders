@@ -7,6 +7,7 @@ const s = st.seed()
 const scripts = [
    'utils',
    'globals',
+   'storage',
    'cache',
    'view',
    'api',
