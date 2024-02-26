@@ -8,7 +8,7 @@ st.data.waypoint = (() => {
 
    const _fetch = async waypointSymbol => {
       const { systemID, waypointID } = splitSymbol(waypointSymbol)
-      const { ok, resp } = await st.api.get(`systems/${systemID}/waypoints`)
+      const { ok, resp } = await st.api.getAll(`systems/${systemID}/waypoints`)
       if (!ok) {
          console.log(`Error ${resp.error.code}: ${resp.error.message}`)
          return null
