@@ -25,6 +25,22 @@ st.api = (() => {
       })
    }
 
+   const getAll = async (url) => {
+      const limit = 20
+      const geturl = page => { return `${url}?limit=${limit}&page=${page}` }
+      page = 1
+      console.log(`Fetching page ${page}`)
+      let { ok, resp } = await get(geturl(page++))
+      let combined = ok ? resp.data : []
+      while (ok && resp.meta.page * limit < resp.meta.total) {
+         console.log(`Fetching page ${page} of ${Math.ceil(resp.meta.total / limit)}`);
+         ({ ok, resp } = await get(geturl(page++)))
+         combined = [ ...combined, ...resp.data ]
+      }
+      resp.data = combined
+      return { ok, resp }
+   }
+
    const post = async (url, payload) => {
       return await request(url, {
          method: 'POST',
@@ -36,5 +52,5 @@ st.api = (() => {
       });
    }
 
-   return { get, post }
+   return { get, getAll, post }
 })()
