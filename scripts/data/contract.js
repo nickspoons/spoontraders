@@ -18,7 +18,7 @@ st.data.contract = (() => {
          console.log(`Error ${resp.error.code}: ${resp.error.message}`)
       else
       // TODO: update/refresh agent with updated credits
-         console.log(res)
+      console.log(resp)
    }
 
    const deliver = async (id, shipSymbol) => {
