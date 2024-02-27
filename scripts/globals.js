@@ -31,6 +31,7 @@ st.colors = {
    active: '#83a598',
    success: '#b8bb26',
    query: '#8ec07c',
+   highlight: '#076678',
 
    waypoint: {
       PLANET: '#b8bb26',

@@ -15,7 +15,7 @@ st.elements.system.draw = (() => {
       }
    }
 
-   const drawWaypoints = (ctx, waypoints) => {
+   const drawWaypoints = (ctx, waypoints, selectedWaypointID) => {
       const circle = (waypoint, radius) =>
          ctx.arc(
             offsetBy + waypoint.x * scaleBy,
@@ -34,7 +34,10 @@ st.elements.system.draw = (() => {
          ctx.strokeStyle = st.colors.foregroundBright
          ctx.lineWidth = 5
          ctx.stroke()
+         let highlighted = wp.symbol === selectedWaypointID
          for (const orb of wp.orbitals) {
+            if (orb.symbol === selectedWaypointID)
+               highlighted = true
             ctx.beginPath()
             radius += 5
             ctx.lineWidth = 10
@@ -48,15 +51,30 @@ st.elements.system.draw = (() => {
             ctx.lineWidth = 5
             ctx.stroke()
          }
+         if (highlighted) {
+            ctx.beginPath()
+            radius += 10
+            if (radius < 60) radius = 60
+            ctx.setLineDash([10, 80])
+            ctx.lineDashOffset = 40
+            ctx.shadowColor = st.colors.highlight
+            ctx.shadowBlur = 30
+            ctx.lineWidth = 30
+            ctx.strokeStyle = st.colors.highlight
+            circle(wp, radius)
+            ctx.stroke()
+            ctx.shadowBlur = 0
+            ctx.setLineDash([])
+         }
          wp.radius = radius / scaleBy
       })
    }
 
-   const system = async (canvas, systemID) => {
+   const system = async (canvas, systemID, selectedWaypointID) => {
       const ctx = canvas.getContext('2d');
       clear(ctx)
       let waypoints = await st.data.waypoint.findInSystem(systemID)
-      drawWaypoints(ctx, waypoints)
+      drawWaypoints(ctx, waypoints, selectedWaypointID)
       canvas.onclick = ev => {
          st.float.clear()
          const coord = getMouse(canvas, ev)
@@ -66,6 +84,8 @@ st.elements.system.draw = (() => {
                st.float.show(
                   { x: ev.pageX, y: ev.pageY },
                   st.elements.waypoint.render(wp))
+               clear(ctx)
+               drawWaypoints(ctx, waypoints, wp.symbol)
                return
             }
          // If a waypoint was not clicked, redraw reversed (to toggle
