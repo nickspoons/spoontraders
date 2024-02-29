@@ -8,8 +8,16 @@
       <base href="/spoontraders/">
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <style>.hidden { display: none } .invisible { visibility: hidden }</style>
-      <script>document.writeln(`<link rel="stylesheet" href="styles/style.css?s=${Math.random()}"><\/style>`);</script>
-      <script>document.writeln(`<script src="scripts/init.js?s=${Math.random()}"><\/script>`);</script>
+      <script>
+         const seed = Math.random()
+         const link = document.createElement('link')
+         link.rel = 'stylesheet'
+         link.href = 'styles/style.css?s=' + seed
+         document.head.appendChild(link)
+         const script = document.createElement('script')
+         script.src = 'scripts/init.js?s=' + seed
+         document.head.appendChild(script)
+      </script>
    </head>
    <body>
 

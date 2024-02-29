@@ -4,7 +4,7 @@ const st = {
 }
 
 const s = st.seed()
-const scripts = [
+const scriptNames = [
    'utils',
    'globals',
    'storage',
@@ -32,6 +32,9 @@ const scripts = [
    'views/status',
    'load'
 ]
-scripts.forEach(scriptName =>
-   document.writeln(`<script defer src="scripts/${scriptName}.js?s=${s}"><\/script>`))
-
+scriptNames.forEach(scriptName => {
+   const script = document.createElement('script')
+   script.defer = true
+   script.src = `scripts/${scriptName}.js?s=${s}`
+   document.head.appendChild(script)
+})
