@@ -15,6 +15,30 @@ st.elements.system.draw = (() => {
       }
    }
 
+   const drawCircle = (ctx, {x, y}, radius, width, style) => {
+      ctx.beginPath()
+      ctx.lineWidth = width
+      ctx.strokeStyle = style
+      ctx.arc(
+         offsetBy + x * scaleBy,
+         offsetBy + y * scaleBy,
+         radius,
+         0,
+         2 * Math.PI)
+      ctx.stroke()
+   }
+
+   const drawTarget = (ctx, waypoint, radius, width, style) => {
+      ctx.beginPath()
+      ctx.setLineDash([10, 80])
+      ctx.lineDashOffset = 40
+      ctx.shadowColor = st.colors.highlight
+      ctx.shadowBlur = 30
+      drawCircle(ctx, waypoint, radius, 30, st.colors.highlight)
+      ctx.shadowBlur = 0
+      ctx.setLineDash([])
+   }
+
    const drawWaypoints = (ctx, waypoints, selectedWaypointID) => {
       const circle = (waypoint, radius) =>
          ctx.arc(
@@ -38,33 +62,13 @@ st.elements.system.draw = (() => {
          for (const orb of wp.orbitals) {
             if (orb.symbol === selectedWaypointID)
                highlighted = true
-            ctx.beginPath()
-            radius += 5
-            ctx.lineWidth = 10
-            ctx.strokeStyle = st.colors.waypoint[orb.type] || st.colors.waypoint.unknown
-            circle(wp, radius)
-            ctx.stroke()
-            ctx.beginPath()
-            radius += 5
-            circle(wp, radius)
-            ctx.strokeStyle = st.colors.foregroundBright
-            ctx.lineWidth = 5
-            ctx.stroke()
+            drawCircle(ctx, wp, radius+=7.5, 10, st.colors.waypoint[orb.type] || st.colors.waypoint.unknown)
+            drawCircle(ctx, wp, radius+=8, 5, st.colors.foregroundBright)
          }
          if (highlighted) {
-            ctx.beginPath()
             radius += 10
             if (radius < 60) radius = 60
-            ctx.setLineDash([10, 80])
-            ctx.lineDashOffset = 40
-            ctx.shadowColor = st.colors.highlight
-            ctx.shadowBlur = 30
-            ctx.lineWidth = 30
-            ctx.strokeStyle = st.colors.highlight
-            circle(wp, radius)
-            ctx.stroke()
-            ctx.shadowBlur = 0
-            ctx.setLineDash([])
+            drawTarget(ctx, wp, radius)
          }
          wp.radius = radius / scaleBy
       })

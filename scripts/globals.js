@@ -34,12 +34,15 @@ st.colors = {
    highlight: '#076678',
 
    waypoint: {
-      PLANET: '#b8bb26',
-      GAS_GIANT: '#79740e',
       ASTEROID_FIELD: '#665c54',
+      ASTEROID_BASE: '#7c6f64',
+      ENGINEERED_ASTEROID: '#b57614',
+      FUEL_STATION: '#fabd2f',
+      GAS_GIANT: '#79740e',
       JUMP_GATE: '#689d6a',
       MOON: '#83a598',
       ORBITAL_STATION: '#b16286',
+      PLANET: '#b8bb26',
       unknown: '#fb4934'
    }
 }
