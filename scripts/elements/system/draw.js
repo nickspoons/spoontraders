@@ -32,7 +32,7 @@ st.elements.system.draw = (() => {
       ctx.stroke()
    }
 
-   const drawTarget = (ctx, waypoint, radius, width, style) => {
+   const drawHighlightTarget = (ctx, waypoint, radius, width, style) => {
       ctx.beginPath()
       ctx.setLineDash([10, 80])
       ctx.lineDashOffset = 40
@@ -51,15 +51,11 @@ st.elements.system.draw = (() => {
          for (const orb of wp.orbitals) {
             if (orb.symbol === selectedWaypointID)
                highlighted = true
-            drawCircle(ctx, wp, radius += 2.5, 5, st.getColour(orb))
-            drawCircle(ctx, wp, radius += 1, 1, st.colours.foregroundBright)
+            drawCircle(ctx, wp, radius += 7.5, 5, st.getColour(orb))
          }
-         if (highlighted) {
-            radius += 10
-            if (radius < 60) radius = 60
-            drawTarget(ctx, wp, radius)
-         }
-         wp.radius = radius / scaleBy
+         if (highlighted)
+            drawHighlightTarget(ctx, wp, Math.max(radius + 10, 60))
+         wp.radius = (radius + 5) / scaleBy
       })
    }
 
