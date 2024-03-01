@@ -45,15 +45,13 @@ st.elements.system.draw = (() => {
 
    const drawWaypoints = (ctx, waypoints, selectedWaypointID) => {
       waypoints.forEach(wp => {
-         let radius = st.sizes.waypoint[wp.type] || st.sizes.waypoint.unknown
-         drawCircle(ctx, wp, radius, 1,
-            st.colours.foregroundBright,
-            st.colours.waypoint[wp.type] || st.colours.waypoint.unknown)
+         let radius = st.getSize(wp)
+         drawCircle(ctx, wp, radius, 1, st.colours.foregroundBright, st.getColour(wp))
          let highlighted = wp.symbol === selectedWaypointID
          for (const orb of wp.orbitals) {
             if (orb.symbol === selectedWaypointID)
                highlighted = true
-            drawCircle(ctx, wp, radius += 2.5, 5, st.colours.waypoint[orb.type] || st.colours.waypoint.unknown)
+            drawCircle(ctx, wp, radius += 2.5, 5, st.getColour(orb))
             drawCircle(ctx, wp, radius += 1, 1, st.colours.foregroundBright)
          }
          if (highlighted) {

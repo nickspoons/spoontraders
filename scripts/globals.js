@@ -46,6 +46,9 @@ st.colours = {
       unknown: '#fb4934'
    }
 }
+st.getColour = ({ type }) =>
+   st.colours.waypoint[type] || st.colours.waypoint.unknown
+
 st.sizes = {
    waypoint: {
       ASTEROID: 10,
@@ -59,6 +62,8 @@ st.sizes = {
       unknown: 5
    }
 }
+st.getSize = ({ type }) =>
+   st.sizes.waypoint[type] || st.sizes.waypoint.unknown
 
 // #1d2021
 // #282828
