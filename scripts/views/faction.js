@@ -30,7 +30,7 @@ st.views.faction = (() => {
       const hqlinks = dqss(`#factions-${seed} .faction a[data-id]`)
       hqlinks.forEach(link => link.onclick = ev => {
          ev.preventDefault()
-         st.view.navigate(st.view.View.SYSTEM)
+         st.view.navigate(st.view.View.SYSTEM, { skipActivation: true })
          st.views.system.load(link.dataset.id)
       })
       st.view.loading = false

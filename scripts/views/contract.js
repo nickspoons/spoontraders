@@ -32,7 +32,7 @@ st.views.contract = (() => {
       const hqlinks = dqss(`#contract-${seed} .contract a[data-id]`)
       hqlinks.forEach(link => link.onclick = ev => {
          ev.preventDefault()
-         st.view.navigate(st.view.View.SYSTEM)
+         st.view.navigate(st.view.View.SYSTEM, { skipActivation: true })
          st.views.system.load(link.dataset.id)
       })
       const btns = dqss(`#contract-${seed} .contract button[data-id]`)

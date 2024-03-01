@@ -33,7 +33,7 @@ st.views.agent = (() => {
 `
       dbi(`a-${seed}`).onclick = ce => {
          ce.preventDefault()
-         st.view.navigate(st.view.View.SYSTEM)
+         st.view.navigate(st.view.View.SYSTEM, { skipActivation: true })
          st.views.system.load(data.headquarters)
       }
       dbi(`button-${seed}`).onclick = () => {

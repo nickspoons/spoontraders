@@ -42,7 +42,7 @@ st.view = (() => {
          $loading.classList.add('hidden')
    }
 
-   const navigate = async toview => {
+   const navigate = async (toview, options) => {
       st.float.clear()
       if (toview === -1)
          toview = st.state.registered ? selected : View.REGISTRATION
@@ -55,10 +55,10 @@ st.view = (() => {
       st.cache.view = toview
       selected = toview
       st.state.error = false
-      await update()
+      await update(options)
    }
 
-   const update = async () => {
+   const update = async options => {
       const currentIndex = getCurrent()
       const $next = $$views[currentIndex]
       if ($next !== $currentView) {
@@ -66,7 +66,7 @@ st.view = (() => {
             $currentView.view.classList.add('hidden')
          $next.view.classList.remove('hidden')
          $currentView = $next
-         if ($currentView.onactivate)
+         if ($currentView.onactivate && !(options || {}).skipActivation)
             await $currentView.onactivate()
       }
       $nav.classList.remove('invisible')
