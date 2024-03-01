@@ -1,4 +1,5 @@
 (async () => {
+   console.log('loading now')
    st.state.token = st.cache.token
    if (st.state.token && await st.views.agent.load())
       st.state.registered = true

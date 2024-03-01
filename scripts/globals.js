@@ -1,4 +1,5 @@
 // Data
+console.log('globals now')
 st.agent = {
    headquarters: null
 }
@@ -107,3 +108,4 @@ st.getSize = ({ type }) =>
 // #8f3f71
 // #427b58
 // #af3a03
+console.log('globals done')
