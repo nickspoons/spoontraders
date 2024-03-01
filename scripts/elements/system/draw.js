@@ -1,6 +1,6 @@
 st.elements.system.draw = (() => {
-   const offsetBy = 1000
-   const scaleBy = 10
+   const offsetBy = 500
+   const scaleBy = 1
 
    const clear = ctx => {
       ctx.fillStyle = st.colors.backgroundDark;
@@ -15,7 +15,7 @@ st.elements.system.draw = (() => {
       }
    }
 
-   const drawCircle = (ctx, {x, y}, radius, width, style) => {
+   const drawCircle = (ctx, {x, y}, radius, width, style, fillStyle) => {
       ctx.beginPath()
       ctx.lineWidth = width
       ctx.strokeStyle = style
@@ -25,6 +25,10 @@ st.elements.system.draw = (() => {
          radius,
          0,
          2 * Math.PI)
+      if (fillStyle) {
+         ctx.fillStyle = fillStyle
+         ctx.fill()
+      }
       ctx.stroke()
    }
 
@@ -33,37 +37,24 @@ st.elements.system.draw = (() => {
       ctx.setLineDash([10, 80])
       ctx.lineDashOffset = 40
       ctx.shadowColor = st.colors.highlight
-      ctx.shadowBlur = 30
-      drawCircle(ctx, waypoint, radius, 30, st.colors.highlight)
+      ctx.shadowBlur = 20
+      drawCircle(ctx, waypoint, radius, 20, st.colors.highlight)
       ctx.shadowBlur = 0
       ctx.setLineDash([])
    }
 
    const drawWaypoints = (ctx, waypoints, selectedWaypointID) => {
-      const circle = (waypoint, radius) =>
-         ctx.arc(
-            offsetBy + waypoint.x * scaleBy,
-            offsetBy + waypoint.y * scaleBy,
-            radius,
-            0,
-            2 * Math.PI)
-
       waypoints.forEach(wp => {
-         ctx.beginPath()
-         let radius = 0
-         ctx.fillStyle = st.colors.waypoint[wp.type] || st.colors.waypoint.unknown
-         radius = st.sizes.waypoint[wp.type] || st.sizes.waypoint.unknown
-         circle(wp, radius)
-         ctx.fill()
-         ctx.strokeStyle = st.colors.foregroundBright
-         ctx.lineWidth = 5
-         ctx.stroke()
+         let radius = st.sizes.waypoint[wp.type] || st.sizes.waypoint.unknown
+         drawCircle(ctx, wp, radius, 1,
+            st.colors.foregroundBright,
+            st.colors.waypoint[wp.type] || st.colors.waypoint.unknown)
          let highlighted = wp.symbol === selectedWaypointID
          for (const orb of wp.orbitals) {
             if (orb.symbol === selectedWaypointID)
                highlighted = true
-            drawCircle(ctx, wp, radius+=7.5, 10, st.colors.waypoint[orb.type] || st.colors.waypoint.unknown)
-            drawCircle(ctx, wp, radius+=8, 5, st.colors.foregroundBright)
+            drawCircle(ctx, wp, radius += 2.5, 5, st.colors.waypoint[orb.type] || st.colors.waypoint.unknown)
+            drawCircle(ctx, wp, radius += 1, 1, st.colors.foregroundBright)
          }
          if (highlighted) {
             radius += 10

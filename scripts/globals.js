@@ -48,13 +48,15 @@ st.colors = {
 }
 st.sizes = {
    waypoint: {
-      PLANET: 50,
-      GAS_GIANT: 80,
+      ASTEROID: 10,
+      ASTEROID_BASE: 15,
       ASTEROID_FIELD: 30,
-      JUMP_GATE: 30,
-      unknown: 10,
-   },
-   orbital: {
+      ENGINEERED_ASTEROID: 15,
+      FUEL_STATION: 15,
+      GAS_GIANT: 40,
+      JUMP_GATE: 10,
+      PLANET: 20,
+      unknown: 5
    }
 }
 

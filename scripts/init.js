@@ -34,7 +34,6 @@ const scriptNames = [
 ]
 scriptNames.forEach(scriptName => {
    const script = document.createElement('script')
-   script.defer = true
    script.src = `scripts/${scriptName}.js?s=${s}`
    document.head.appendChild(script)
 })
