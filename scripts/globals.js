@@ -20,7 +20,7 @@ st.elements.system = { }
 st.views = { }
 
 // Constants
-st.colors = {
+st.colours = {
    foregroundBright: '#f9f5d7',
    foreground: '#ebdbb2',
    border: '#ebdbb29a',

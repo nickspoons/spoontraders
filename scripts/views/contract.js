@@ -12,17 +12,17 @@ st.views.contract = (() => {
 
 <style>
    #contract-${seed} .contract dl.deliver  {
-      background-color: ${st.colors.backgroundMedium};
-      border: 1px solid ${st.colors.border};
+      background-color: ${st.colours.backgroundMedium};
+      border: 1px solid ${st.colours.border};
       border-radius: 0.3em 0;
       padding: 0.5em;
       flex-grow: 0;
    }
    #contract-${seed} .contract.accepted {
-      border: 1px solid ${st.colors.active};
+      border: 1px solid ${st.colours.active};
    }
    #contract-${seed} .contract.fulfilled {
-      border: 1px solid ${st.colors.success};
+      border: 1px solid ${st.colours.success};
    }
 </style>
 

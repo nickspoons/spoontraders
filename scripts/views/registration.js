@@ -87,7 +87,7 @@
    }
 
    #factions-${seed} .faction {
-      border: 1px solid ${st.colors.borderDim};
+      border: 1px solid ${st.colours.borderDim};
       border-bottom-color: transparent;
       cursor: pointer;
       max-width: 20em;
@@ -98,10 +98,10 @@
    }
    #factions-${seed} .faction:last-child {
       border-radius: 0 0 0.3em 0.3em;
-      border-bottom-color: ${st.colors.borderDim};
+      border-bottom-color: ${st.colours.borderDim};
    }
    #factions-${seed} .faction.selected {
-      border-color: ${st.colors.borderBright};
+      border-color: ${st.colours.borderBright};
    }
    #factions-${seed} .faction h3 {
       font-size: 1em;

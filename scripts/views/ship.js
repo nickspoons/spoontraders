@@ -12,17 +12,17 @@ st.views.ship = (() => {
 
 <style>
    #ship-${seed} .ship .wrapping-row dl  {
-      background-color: ${st.colors.backgroundMedium};
-      border: 1px solid ${st.colors.border};
+      background-color: ${st.colours.backgroundMedium};
+      border: 1px solid ${st.colours.border};
       border-radius: 0.3em 0;
       padding: 0.5em;
       flex-grow: 0;
    }
    #ship-${seed} .ship.extracting {
-      border: 1px solid ${st.colors.active};
+      border: 1px solid ${st.colours.active};
    }
    #ship-${seed} .ship.surveying {
-      border: 1px solid ${st.colors.query};
+      border: 1px solid ${st.colours.query};
    }
 </style>
 
