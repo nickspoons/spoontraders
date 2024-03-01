@@ -43,17 +43,21 @@ st.elements.system.draw = (() => {
       ctx.setLineDash([])
    }
 
-   const drawWaypoints = (ctx, waypoints, selectedWaypointID) => {
+   const drawWaypoints = (ctx, waypoints, ships, selectedWaypointID) => {
       waypoints.forEach(wp => {
          let radius = st.getSize(wp)
          wp.radius = (radius + 5) / scaleBy
          drawCircle(ctx, wp, radius, 1, st.colours.foregroundBright, st.getColour(wp))
          let highlighted = wp.symbol === selectedWaypointID
+         let wpShips = ships.filter(s => s.nav.waypointSymbol === wp.symbol)
          for (const orb of wp.orbitals) {
             if (orb.symbol === selectedWaypointID)
                highlighted = true
+            wpShips = [...wpShips, ...ships.filter(s => s.nav.waypointSymbol === orb.symbol)]
             drawCircle(ctx, wp, radius += 7.5, 5, st.getColour(orb))
          }
+         for (const ship of wpShips)
+            drawCircle(ctx, wp, radius += 7.5, 5, st.colours.highlight)
          if (highlighted)
             drawHighlightTarget(ctx, wp, Math.max(radius + 10, 60))
       })
@@ -63,7 +67,8 @@ st.elements.system.draw = (() => {
       const ctx = canvas.getContext('2d');
       clear(ctx)
       let waypoints = await st.data.waypoint.findInSystem(systemID)
-      drawWaypoints(ctx, waypoints, selectedWaypointID)
+      let ships = await st.data.ship.findAll()
+      drawWaypoints(ctx, waypoints, ships, selectedWaypointID)
       canvas.onclick = ev => {
          st.float.clear()
          const coord = getMouse(canvas, ev)
