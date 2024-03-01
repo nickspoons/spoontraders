@@ -46,6 +46,7 @@ st.elements.system.draw = (() => {
    const drawWaypoints = (ctx, waypoints, selectedWaypointID) => {
       waypoints.forEach(wp => {
          let radius = st.getSize(wp)
+         wp.radius = (radius + 5) / scaleBy
          drawCircle(ctx, wp, radius, 1, st.colours.foregroundBright, st.getColour(wp))
          let highlighted = wp.symbol === selectedWaypointID
          for (const orb of wp.orbitals) {
@@ -55,7 +56,6 @@ st.elements.system.draw = (() => {
          }
          if (highlighted)
             drawHighlightTarget(ctx, wp, Math.max(radius + 10, 60))
-         wp.radius = (radius + 5) / scaleBy
       })
    }
 

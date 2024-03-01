@@ -2,7 +2,7 @@ st.elements.waypoint = (() => {
 
    const renderDetails = wp => `
 <h3 title="${wp.symbol} - ${wp.faction.symbol}"
-      style="color: ${st.getColour(wp.type)}">
+      style="color: ${st.getColour(wp)}">
    ${wp.symbol}
 </h3>
 <dl title="${`
