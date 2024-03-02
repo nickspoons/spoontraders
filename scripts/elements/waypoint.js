@@ -12,6 +12,11 @@ st.elements.waypoint = (() => {
    <dt>Type</dt>
    <dd>${wp.type}</dd>
 </dl>
+${wp.ships.map(s => `
+<dl>
+   <dt>Ship</dt>
+   <dd>${s.symbol}: ${s.nav.status}</dd>
+</dl>`).join(', ')}
 ${wp.traits.map(t => `<span class="trait" title="${t.symbol}: ${t.description}">${t.name}</span>`).join(', ')}`
 
    const render = wp => `

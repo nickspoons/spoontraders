@@ -50,10 +50,12 @@ st.elements.system.draw = (() => {
          drawCircle(ctx, wp, radius, 1, st.colours.foregroundBright, st.getColour(wp))
          let highlighted = wp.symbol === selectedWaypointID
          let wpShips = ships.filter(s => s.nav.waypointSymbol === wp.symbol)
+         wp.ships = [...wpShips]
          for (const orb of wp.orbitals) {
             if (orb.symbol === selectedWaypointID)
                highlighted = true
-            wpShips = [...wpShips, ...ships.filter(s => s.nav.waypointSymbol === orb.symbol)]
+            orb.ships = ships.filter(s => s.nav.waypointSymbol === orb.symbol)
+            wpShips = [...wpShips, ...orb.ships]
             drawCircle(ctx, wp, radius += 7.5, 5, st.getColour(orb))
          }
          for (const ship of wpShips)
@@ -79,14 +81,14 @@ st.elements.system.draw = (() => {
                   { x: ev.pageX, y: ev.pageY },
                   st.elements.waypoint.render(wp))
                clear(ctx)
-               drawWaypoints(ctx, waypoints, wp.symbol)
+               drawWaypoints(ctx, waypoints, ships, wp.symbol)
                return
             }
          // If a waypoint was not clicked, redraw reversed (to toggle
          // overlapping waypoint display/click order
          waypoints = reversed
          clear(ctx)
-         drawWaypoints(ctx, waypoints)
+         drawWaypoints(ctx, waypoints, ships)
       }
    }
 
