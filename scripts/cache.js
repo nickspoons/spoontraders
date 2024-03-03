@@ -1,25 +1,25 @@
-st.cache = (() => {
-   const asnumber = key => {
-      const cached = st.storage.read(key)
-      return cached !== null ? Number(cached) : null
-   }
+import { storage } from './storage.js'
 
-   const read = key => {
-      const s = st.storage.read(key)
-      return s ? JSON.parse(s) : null
-   }
+const asnumber = key => {
+   const cached = storage.read(key)
+   return cached !== null ? Number(cached) : null
+}
 
-   const write = (key, o) => st.storage.write(key, JSON.stringify(o))
+const read = key => {
+   const s = storage.read(key)
+   return s ? JSON.parse(s) : null
+}
 
-   return {
-      get token() { return st.storage.read('st.token') },
-      set token(value) { st.storage.write('st.token', value) },
-      removeToken() { st.storage.remove('st.token') },
+const write = (key, o) => storage.write(key, JSON.stringify(o))
 
-      get view() { return asnumber('st.view') },
-      set view(value) { st.storage.write('st.view', value) },
+export const cache = {
+   get token() { return storage.read('st.token') },
+   set token(value) { storage.write('st.token', value) },
+   removeToken() { storage.remove('st.token') },
 
-      read,
-      write
-   }
-})()
+   get view() { return asnumber('st.view') },
+   set view(value) { storage.write('st.view', value) },
+
+   read,
+   write
+}

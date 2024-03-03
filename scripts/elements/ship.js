@@ -1,6 +1,4 @@
-st.elements.ship = (() => {
-
-   const render = ship => `
+export const render = ship => `
 <div class="ship datacard
       ${ship.extracting ? 'extracting' : ''}
       ${ship.surveying ? 'surveying' : ''}">
@@ -189,6 +187,3 @@ st.elements.ship = (() => {
 
 </div>
 `
-
-   return { render }
-})()

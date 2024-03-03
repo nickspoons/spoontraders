@@ -1,18 +1,26 @@
-st.views.agent = (() => {
-   const thisView = st.view.View.AGENT
+import { api } from '../api.js'
+import { cache } from '../cache.js'
+import { doc } from '../doc.js'
+import { agent, state } from '../globals.js'
+import { view } from '../view.js'
+import { utils } from '../utils.js'
 
-   const load = async () => {
-      const { ok, resp } = await st.api.get('my/agent')
-      if (!ok) {
-         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
-         return false
-      }
-      if (!resp)
-         return false
-      const data = resp.data
-      st.agent.headquarters = data.headquarters
-      const seed = st.seed()
-      st.view.get(thisView).innerHTML = `
+import { load as loadSystem } from './system.js'
+
+const thisView = view.View.AGENT
+
+export const load = async () => {
+   const { ok, resp } = await api.get('my/agent')
+   if (!ok) {
+      console.log(`Error ${resp.error.code}: ${resp.error.message}`)
+      return false
+   }
+   if (!resp)
+      return false
+   const data = resp.data
+   agent.headquarters = data.headquarters
+   const seed = utils.seed()
+   view.get(thisView).innerHTML = `
 <h2>${data.symbol}</h2>
 
 <dl>
@@ -24,29 +32,26 @@ st.views.agent = (() => {
 
 <details>
    <summary>Access token</summary>
-   <pre>${st.state.token}</pre>
+   <pre>${state.token}</pre>
 </details>
 
 <button id="button-${seed}">
    Log out
 </button>
 `
-      dbi(`a-${seed}`).onclick = ce => {
-         ce.preventDefault()
-         st.view.navigate(st.view.View.SYSTEM, { skipActivation: true })
-         st.views.system.load(data.headquarters)
-      }
-      dbi(`button-${seed}`).onclick = () => {
-         st.cache.token = null
-         st.state.token = null
-         st.state.registered = false
-         st.agent.headquarters = null
-         st.view.navigate(st.view.View.REGISTRATION)
-
-         st.view.update()
-      }
-      return true
+   doc.byID(`a-${seed}`).onclick = ce => {
+      ce.preventDefault()
+      view.navigate(view.View.SYSTEM, { skipActivation: true })
+      loadSystem(data.headquarters)
    }
+   doc.byID(`button-${seed}`).onclick = () => {
+      cache.token = null
+      state.token = null
+      state.registered = false
+      agent.headquarters = null
+      view.navigate(view.View.REGISTRATION)
 
-   return { load }
-})()
+      view.update()
+   }
+   return true
+}

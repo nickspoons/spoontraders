@@ -1,10 +1,17 @@
+import { cache } from './cache.js'
+import { state } from './globals.js'
+import { view } from './view.js'
+
+import { load as loadAgent } from './views/agent.js'
+import { load as loadRegistration } from './views/registration.js'
+
 (async () => {
-   console.log('loading now')
-   st.state.token = st.cache.token
-   if (st.state.token && await st.views.agent.load())
-      st.state.registered = true
-   else if (st.state.token)
-      st.state.token = null
-   await st.view.navigate(-1)
-   st.view.loading = false
+   await loadRegistration()
+   state.token = cache.token
+   if (state.token && await loadAgent())
+      state.registered = true
+   else if (state.token)
+      state.token = null
+   await view.navigate(-1)
+   view.loading = false
 })()

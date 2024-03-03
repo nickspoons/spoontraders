@@ -1,9 +1,11 @@
-st.float = (() => {
+import { doc } from './doc.js'
 
-   const clear = () => dqss('.floater').forEach(f => f.innerHTML = '')
+export const float = (() => {
+
+   const clear = () => doc.queryAll('.floater').forEach(f => f.innerHTML = '')
 
    const show = (point, html) => {
-      const floater = dbi('floater')
+      const floater = doc.byID('floater')
       floater.innerHTML = html
       floater.style.top = `${point.y}px`
       floater.style.left = `${point.x}px`

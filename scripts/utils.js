@@ -1,10 +1,4 @@
-const dbi = id => document.getElementById(id)
-const dbt = (element, tag) => element.getElementsByTagName(tag)[0]
-const dbts = (element, tag) => [...element.getElementsByTagName(tag)]
-const dqs = selector => document.querySelector(selector)
-const dqss = selector => [...document.querySelectorAll(selector)]
-
-st.utils = (() => {
+export const utils = (() => {
 
    const canvas = (() => {
       const getMouse = (canvas, ev) => {
@@ -27,5 +21,8 @@ st.utils = (() => {
       return { getMouse, isInsideCircle }
    })()
 
-   return { canvas }
+   const seed = () => Math.random().toString(36).slice(2)
+
+   return { canvas, seed }
 })()
+

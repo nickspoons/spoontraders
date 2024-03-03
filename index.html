@@ -3,21 +3,13 @@
    <head>
       <meta charset="utf-8">
       <title>Spoontraders</title>
-      <link rel="icon" sizes="32x32" href="assets/icons/favicon-32x32.png"/>
-      <link rel="icon" sizes="16x16" href="assets/icons/favicon-16x16.png"/>
+      <link rel="icon" sizes="32x32" href="assets/icons/favicon-32x32.png">
+      <link rel="icon" sizes="16x16" href="assets/icons/favicon-16x16.png">
       <base href="/spoontraders/">
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
       <style>.hidden { display: none } .invisible { visibility: hidden }</style>
-      <script>
-         const seed = Math.random()
-         const link = document.createElement('link')
-         link.rel = 'stylesheet'
-         link.href = 'styles/style.css?s=' + seed
-         document.head.appendChild(link)
-         const script = document.createElement('script')
-         script.src = 'scripts/init.js?s=' + seed
-         document.head.appendChild(script)
-      </script>
+      <link rel="stylesheet" href="styles/style.css">
+      <script defer type="module" src="scripts/load.js"></script>
    </head>
    <body>
 

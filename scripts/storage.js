@@ -1,7 +1,4 @@
-st.storage = (() => {
-   return {
-      read: key => localStorage.getItem(key),
-      remove: key => localStorage.removeItem(key),
-      write: (key, value) => localStorage.setItem(key, value)
-   }
-})()
+export const storage = {
+   read: key => localStorage.getItem(key),
+   write: (key, value) => localStorage.setItem(key, value)
+}

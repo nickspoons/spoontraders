@@ -1,27 +1,26 @@
 // Data
-console.log('globals now')
-st.agent = {
+export const agent = {
    headquarters: null
 }
-st.state = {
+export const state = {
    registered: false,
    error: false,
    token: null
 }
 
 // Constants
-st.constants = {
+export const constants = {
    surveyingTarget: 50
 }
 
-// Namespaces
-st.data = { }
-st.elements = { }
-st.elements.system = { }
-st.views = { }
+// // Namespaces
+// st.data = { }
+// st.elements = { }
+// st.elements.system = { }
+// st.views = { }
 
 // Constants
-st.colours = {
+export const colours = {
    foregroundBright: '#f9f5d7',
    foreground: '#ebdbb2',
    border: '#ebdbb29a',
@@ -48,10 +47,10 @@ st.colours = {
       unknown: '#fb4934'
    }
 }
-st.getColour = ({ type }) =>
-   st.colours.waypoint[type] || st.colours.waypoint.unknown
+export const getColour = ({ type }) =>
+   colours.waypoint[type] || colours.waypoint.unknown
 
-st.sizes = {
+export const sizes = {
    waypoint: {
       ASTEROID: 10,
       ASTEROID_BASE: 15,
@@ -64,8 +63,8 @@ st.sizes = {
       unknown: 5
    }
 }
-st.getSize = ({ type }) =>
-   st.sizes.waypoint[type] || st.sizes.waypoint.unknown
+export const getSize = ({ type }) =>
+   sizes.waypoint[type] || sizes.waypoint.unknown
 
 // #1d2021
 // #282828
@@ -108,4 +107,3 @@ st.getSize = ({ type }) =>
 // #8f3f71
 // #427b58
 // #af3a03
-console.log('globals done')

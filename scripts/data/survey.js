@@ -1,6 +1,10 @@
-st.data.survey = (() => {
+import { cache } from '../cache.js'
 
-   let surveys = st.cache.read('st.surveys') || {}
+import { waypoint } from './waypoint.js'
+
+export const survey = (() => {
+
+   let surveys = cache.read('st.surveys') || {}
    let sizes = {
       SMALL: 0.8,
       MODERATE: 1.0,
@@ -30,7 +34,7 @@ st.data.survey = (() => {
    const add = (waypointSymbol, newSurveys) => {
       surveys[waypointSymbol] = [...(surveys[waypointSymbol] || []), ...newSurveys]
          .filter(s => new Date(s.expiration) > new Date)
-      st.cache.write('st.surveys', surveys)
+      cache.write('st.surveys', surveys)
    }
 
    const find = async (waypointSymbol, targets) => {
@@ -45,10 +49,10 @@ st.data.survey = (() => {
    }
 
    const findAll = async (waypointSymbol, targets) => {
-      const { tradeGoods } = await st.data.waypoint.market(waypointSymbol)
+      const { tradeGoods } = await waypoint.market(waypointSymbol)
       surveys[waypointSymbol] = (surveys[waypointSymbol] || [])
          .filter(s => new Date(s.expiration) > new Date)
-      st.cache.write('st.surveys', surveys)
+      cache.write('st.surveys', surveys)
       let found = surveys[waypointSymbol]
       found.sort((a, b) => _score(b, tradeGoods, targets) - _score(a, tradeGoods, targets))
       return found.map(s => ({
@@ -60,7 +64,7 @@ st.data.survey = (() => {
    const remove = (waypointSymbol, survey) => {
       surveys[waypointSymbol] = (surveys[waypointSymbol] || [])
          .filter(s => s.signature !== survey.signature)
-      st.cache.write('st.surveys', surveys)
+      cache.write('st.surveys', surveys)
    }
 
    return {

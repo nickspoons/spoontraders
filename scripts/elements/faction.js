@@ -1,6 +1,4 @@
-st.elements.faction = (() => {
-
-   const render = faction => `
+export const render = faction => `
 <div class="faction datacard">
    <h3 title="${faction.symbol}">${faction.name}</h3>
    <div class="details">
@@ -25,6 +23,3 @@ st.elements.faction = (() => {
    </div>
 </div>
 `
-
-   return { render }
-})()

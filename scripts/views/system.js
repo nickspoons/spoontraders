@@ -1,19 +1,23 @@
-st.views.system = (() => {
-   let currentSystemID = null
+import { doc } from '../doc.js'
+import { agent } from '../globals.js'
+import { view } from '../view.js'
+import { utils } from '../utils.js'
 
-   const load = async id => {
-      let { systemID } = st.data.waypoint
-         .splitSymbol(id || st.agent.headquarters)
-      currentSystemID = systemID
-      st.view.loading = true
-      const seed = st.seed()
-      st.view.current.innerHTML = `
+import { waypoint } from '../data/waypoint.js'
+
+import { render as renderSystem } from '../elements/system.js'
+
+let currentSystemID = null
+
+export const load = async id => {
+   let { systemID } = waypoint.splitSymbol(id || agent.headquarters)
+   currentSystemID = systemID
+   view.loading = true
+   const seed = utils.seed()
+   view.current.innerHTML = `
 <h2>System: ${systemID}</h2>
 <canvas height="1000" width="1000" id="canvas-${seed}"></canvas>
 `
-      await st.elements.system.draw.system(dbi(`canvas-${seed}`), systemID, id)
-      st.view.loading = false
-   }
-
-   return { load }
-})()
+   await renderSystem(doc.byID(`canvas-${seed}`), systemID, id)
+   view.loading = false
+}

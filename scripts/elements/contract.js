@@ -1,6 +1,4 @@
-st.elements.contract = (() => {
-
-   const render = contract => `
+export const render = contract => `
 <div class="contract datacard
       ${contract.fulfilled ? 'fulfilled' : ''}
       ${contract.accepted ? 'accepted' : ''}">
@@ -41,6 +39,3 @@ st.elements.contract = (() => {
    </div>
 </div>
 `
-
-   return { render }
-})()

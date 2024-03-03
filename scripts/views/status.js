@@ -1,14 +1,18 @@
-st.views.status = (() => {
-   const load = async () => {
-      st.view.loading = true
-      const { ok, resp } = await st.api.get('')
-      if (!ok) {
-         console.log(`Error ${resp.error.code}: ${resp.error.message}`)
-         return
-      }
-      const data = resp
-      const seed = st.seed()
-      st.view.current.innerHTML = `
+import { api } from '../api.js'
+import { doc } from '../doc.js'
+import { view } from '../view.js'
+import { utils } from '../utils.js'
+
+export const load = async () => {
+   view.loading = true
+   const { ok, resp } = await api.get('')
+   if (!ok) {
+      console.log(`Error ${resp.error.code}: ${resp.error.message}`)
+      return
+   }
+   const data = resp
+   const seed = utils.seed()
+   view.current.innerHTML = `
 <h2>Status</h2>
 <p>${data.status}</p>
 
@@ -61,9 +65,6 @@ st.views.status = (() => {
 </style>
 <button id="btn-${seed}" class="refresh">Refresh</button>
 `
-      dbi(`btn-${seed}`).onclick = () => load()
-      st.view.loading = false
-   }
-
-   return { load }
-})()
+   doc.byID(`btn-${seed}`).onclick = () => load()
+   view.loading = false
+}

@@ -1,11 +1,14 @@
-st.views.error = (() => {
+import { state } from '../globals.js'
+import { view } from '../view.js'
+
+export const error = (() => {
    let _lastError
 
    const show = err => {
       _lastError = err
-      st.state.error = true
-      st.view.update()
-      st.view.current.innerHTML =
+      state.error = true
+      view.update()
+      view.current.innerHTML =
          `<pre>${typeof(err) === 'string' ? err : JSON.stringify(err, null, 2)}</pre>`
       return null
    }

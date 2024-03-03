@@ -1,8 +1,8 @@
-st.elements.waypoint = (() => {
+import { getColour } from '../globals.js'
 
-   const renderDetails = wp => `
+const renderDetails = wp => `
 <h3 title="${wp.symbol} - ${wp.faction.symbol}"
-      style="color: ${st.getColour(wp)}">
+      style="color: ${getColour(wp)}">
    ${wp.symbol}
 </h3>
 <dl title="${`
@@ -19,12 +19,9 @@ ${wp.ships.map(s => `
 </dl>`).join(', ')}
 ${wp.traits.map(t => `<span class="trait" title="${t.symbol}: ${t.description}">${t.name}</span>`).join(', ')}`
 
-   const render = wp => `
+export const render = wp => `
 <div class="waypoint datacard">
    ${renderDetails(wp)}
    ${wp.orbitals.map(o => '<hr>' + renderDetails(o)).join('')}
 </div>
 `
-
-   return { render }
-})()

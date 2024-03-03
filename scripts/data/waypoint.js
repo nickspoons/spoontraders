@@ -1,14 +1,17 @@
-st.data.waypoint = (() => {
+import { api } from '../api.js'
+import { cache } from '../cache.js'
+
+export const waypoint = (() => {
 
    let allwps = []
-   let markets = st.cache.read('st.waypoint-markets') || {}
+   let markets = cache.read('st.waypoint-markets') || {}
    let orbitals = {}
    let waypoints = {}
    let systems = {}
 
    const _fetch = async waypointSymbol => {
       const { systemID, waypointID } = splitSymbol(waypointSymbol)
-      const { ok, resp } = await st.api.getAll(`systems/${systemID}/waypoints`)
+      const { ok, resp } = await api.getAll(`systems/${systemID}/waypoints`)
       if (!ok) {
          console.log(`Error ${resp.error.code}: ${resp.error.message}`)
          return null
@@ -52,14 +55,14 @@ st.data.waypoint = (() => {
 
    const market = async waypointSymbol => {
       const { systemID } = splitSymbol(waypointSymbol)
-      const { ok, resp } = await st.api.get(`systems/${systemID}/waypoints/${waypointSymbol}/market`)
+      const { ok, resp } = await api.get(`systems/${systemID}/waypoints/${waypointSymbol}/market`)
       if (!ok) {
          console.log(`Error ${resp.error.code}: ${resp.error.message}`)
          return []
       }
       if (resp.data.tradeGoods || !(waypointSymbol in markets)) {
          markets[waypointSymbol] = resp.data
-         st.cache.write('st.waypoint-markets', markets)
+         cache.write('st.waypoint-markets', markets)
       }
       return markets[waypointSymbol]
    }

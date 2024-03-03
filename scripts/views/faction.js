@@ -1,14 +1,23 @@
-st.views.faction = (() => {
-   const load = async forceRefresh => {
-      st.view.loading = true
-      await st.data.faction.enrich(forceRefresh)
-      const factions = await st.data.faction.findAll()
-      const seed = st.seed()
-      st.view.current.innerHTML = `
+import { doc } from '../doc.js'
+import { view } from '../view.js'
+import { utils } from '../utils.js'
+
+import { faction } from '../data/faction.js'
+
+import { render } from '../elements/faction.js'
+
+import { load as loadSystem } from './system.js'
+
+export const load = async refresh => {
+   view.loading = true
+   await faction.enrich(refresh)
+   const factions = await faction.findAll()
+   const seed = utils.seed()
+   view.current.innerHTML = `
 <h2>Factions</h2>
 
 <div id="factions-${seed}">
-   ${factions.map(f => st.elements.faction.render(f)).join('')}
+   ${factions.map(f => render(f)).join('')}
 </div>
 
 <style>
@@ -26,15 +35,12 @@ st.views.faction = (() => {
 </style>
 <button id="btn-${seed}" class="refresh">Refresh</button>
 `
-      dbi(`btn-${seed}`).onclick = () => load(true)
-      const hqlinks = dqss(`#factions-${seed} .faction a[data-id]`)
-      hqlinks.forEach(link => link.onclick = ev => {
-         ev.preventDefault()
-         st.view.navigate(st.view.View.SYSTEM, { skipActivation: true })
-         st.views.system.load(link.dataset.id)
-      })
-      st.view.loading = false
-   }
-
-   return { load }
-})()
+   doc.byID(`btn-${seed}`).onclick = () => load(true)
+   const hqlinks = doc.queryAll(`#factions-${seed} .faction a[data-id]`)
+   hqlinks.forEach(link => link.onclick = ev => {
+      ev.preventDefault()
+      view.navigate(view.View.SYSTEM, { skipActivation: true })
+      loadSystem(link.dataset.id)
+   })
+   view.loading = false
+}
